@@ -1,0 +1,28 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #282c34;
+    color: #ffffff;
+    font-family: 'Arial', sans-serif;
+}
+
+canvas {
+    border: 2px solid #61dafb;
+    background-color: #000;
+    display: block;
+    margin-bottom: 20px;
+}
+
+h1 {
+    color: #61dafb;
+    margin-bottom: 20px;
+}
+
+#scoreDisplay {
+    font-size: 1.5em;
+    color: #a2fa51;
+}

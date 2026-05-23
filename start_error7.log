@@ -1,0 +1,58 @@
+C:\Users\jcabr\Monica_Core\web_app.py:53: DeprecationWarning: 
+        on_event is deprecated, use lifespan event handlers instead.
+
+        Read more about it in the
+        [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+        
+  @app.on_event("startup")
+2026-05-23 06:42:43,142 | DEBUG    | asyncio | Using selector: SelectSelector
+INFO:     Started server process [3828]
+INFO:     Waiting for application startup.
+2026-05-23 06:42:43,234 | DEBUG    | core.storage | Directorio asegurado: C:\Users\jcabr\Monica_Core\logs
+2026-05-23 06:42:43,234 | DEBUG    | core.storage | Directorio asegurado: C:\Users\jcabr\Monica_Core\state
+2026-05-23 06:42:43,235 | DEBUG    | core.storage | Directorio asegurado: C:\Users\jcabr\Monica_Core\state\sessions
+2026-05-23 06:42:43,236 | INFO     | core.storage | Logger inicializado en C:\Users\jcabr\Monica_Core\logs\monica_20260523_064243.log
+2026-05-23 06:42:43,236 | INFO     | core.storage | Sistema de almacenamiento inicializado.
+2026-05-23 06:42:43,236 | INFO     | core.storage | Servidor web de Mónica iniciado.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on https://0.0.0.0:8000 (Press CTRL+C to quit)
+
+[HTTPS] Iniciando Monica en modo HTTPS Seguro:
+ - Servidor disponible en: https://localhost:8000
+INFO:     192.168.1.24:64828 - "GET / HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64826 - "GET /static/manifest.json HTTP/1.1" 304 Not Modified
+INFO:     192.168.1.24:64829 - "GET /static/style.css HTTP/1.1" 304 Not Modified
+INFO:     192.168.1.24:64830 - "GET /static/logo_monica.png HTTP/1.1" 304 Not Modified
+INFO:     192.168.1.24:64826 - "GET /api/chat/history?session_id=default HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64829 - "GET /api/chat/sessions HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64830 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64828 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64826 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64828 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64826 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64828 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64826 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64828 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64826 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64828 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64826 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64828 - "GET /api/logs HTTP/1.1" 200 OK
+2026-05-23 06:53:48,087 | INFO     | core.storage | Sincronización: Guardado archivo de sesión en OneDrive -> state/sessions/default.json
+2026-05-23 06:53:48,088 | INFO     | core.storage | Sincronización: Detectados 3 archivos multimedia para subir a la nube.
+2026-05-23 06:53:48,091 | INFO     | core.storage | Sincronización: Archivo subido a OneDrive -> media/images/imagen_20260522_223915.png
+2026-05-23 06:53:48,092 | INFO     | core.storage | Sincronización: ¡Proceso completado! 1 archivos multimedia respaldados en la nube con éxito.
+INFO:     192.168.1.24:64826 - "POST /api/onedrive/sync HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64832 - "GET / HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64832 - "GET /api/chat/history?session_id=default HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64833 - "GET /api/chat/sessions HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64834 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64832 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64833 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64832 - "GET /api/logs HTTP/1.1" 200 OK
+2026-05-23 06:53:57,920 | INFO     | core.storage | Sincronización: Guardado archivo de sesión en OneDrive -> state/sessions/default.json
+2026-05-23 06:53:57,921 | INFO     | core.storage | Sincronización: Detectados 3 archivos multimedia para subir a la nube.
+2026-05-23 06:53:57,926 | INFO     | core.storage | Sincronización: Archivo subido a OneDrive -> media/images/imagen_20260522_223915.png
+2026-05-23 06:53:57,927 | INFO     | core.storage | Sincronización: ¡Proceso completado! 1 archivos multimedia respaldados en la nube con éxito.
+INFO:     192.168.1.24:64833 - "POST /api/onedrive/sync HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64832 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64833 - "GET /api/logs HTTP/1.1" 200 OK

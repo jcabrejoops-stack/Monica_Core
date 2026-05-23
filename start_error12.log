@@ -1,0 +1,100 @@
+C:\Users\jcabr\Monica_Core\web_app.py:53: DeprecationWarning: 
+        on_event is deprecated, use lifespan event handlers instead.
+
+        Read more about it in the
+        [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+        
+  @app.on_event("startup")
+2026-05-23 08:51:37,552 | DEBUG    | asyncio | Using selector: SelectSelector
+INFO:     Started server process [9840]
+INFO:     Waiting for application startup.
+2026-05-23 08:51:37,642 | DEBUG    | core.storage | Directorio asegurado: C:\Users\jcabr\Monica_Core\logs
+2026-05-23 08:51:37,642 | DEBUG    | core.storage | Directorio asegurado: C:\Users\jcabr\Monica_Core\state
+2026-05-23 08:51:37,643 | DEBUG    | core.storage | Directorio asegurado: C:\Users\jcabr\Monica_Core\state\sessions
+2026-05-23 08:51:37,645 | INFO     | core.storage | Logger inicializado en C:\Users\jcabr\Monica_Core\logs\monica_20260523_085137.log
+2026-05-23 08:51:37,645 | INFO     | core.storage | Sistema de almacenamiento inicializado.
+2026-05-23 08:51:37,645 | INFO     | core.storage | Servidor web de Mónica iniciado.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on https://0.0.0.0:8000 (Press CTRL+C to quit)
+
+[HTTPS] Iniciando Monica en modo HTTPS Seguro:
+ - Servidor disponible en: https://localhost:8000
+INFO:     127.0.0.1:57621 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65150 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65150 - "GET /api/logs HTTP/1.1" 200 OK
+2026-05-23 08:52:39,724 | INFO     | core.storage | Sincronización: Guardado archivo de sesión en OneDrive -> state/sessions/default.json
+2026-05-23 08:52:39,730 | INFO     | core.storage | Sincronización: Detectados 3 archivos multimedia para subir a la nube.
+2026-05-23 08:52:39,755 | INFO     | core.storage | Sincronización: Archivo subido a OneDrive -> media/images/imagen_20260522_223915.png
+2026-05-23 08:52:39,757 | INFO     | core.storage | Sincronización: ¡Proceso completado! 1 archivos multimedia respaldados en la nube con éxito.
+INFO:     192.168.1.24:65150 - "POST /api/onedrive/sync HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65151 - "GET / HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65156 - "GET /static/style.css HTTP/1.1" 304 Not Modified
+INFO:     192.168.1.24:65157 - "GET /static/logo_monica.png HTTP/1.1" 304 Not Modified
+INFO:     192.168.1.24:65155 - "GET /api/chat/history?session_id=default HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65156 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65154 - "GET /api/chat/sessions HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65157 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65155 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65157 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65155 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65157 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65155 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65157 - "GET /api/media/list HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65155 - "GET /api/media/list HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65157 - "GET /media/uploads/imagen_20260522_064632.png HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65155 - "GET /media/uploads/IMG_2795.png HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65157 - "GET /media/video/proyecto_20260522_224905/video_20260522_224905.mp4 HTTP/1.1" 404 Not Found
+INFO:     192.168.1.24:65158 - "GET /media/uploads/IMG_2794.png HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65159 - "GET /media/uploads/IMG_2787.png HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65157 - "GET /media/video/proyecto_20260522_224905/escena_01.png HTTP/1.1" 404 Not Found
+INFO:     192.168.1.24:65160 - "GET /media/video/proyecto_20260522_224905/escena_02.png HTTP/1.1" 404 Not Found
+INFO:     192.168.1.24:65161 - "GET /media/video/proyecto_20260522_224905/guion.json HTTP/1.1" 404 Not Found
+INFO:     192.168.1.24:65160 - "GET /media/uploads/IMG_2794.png HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65157 - "GET /media/uploads/IMG_2795.png HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65161 - "GET /media/video/proyecto_20260522_224905/video_20260522_224905.mp4 HTTP/1.1" 404 Not Found
+INFO:     192.168.1.24:65158 - "GET /media/video/proyecto_20260522_224905/guion.json HTTP/1.1" 404 Not Found
+INFO:     192.168.1.24:65161 - "GET /media/video/proyecto_20260522_224905/escena_02.png HTTP/1.1" 404 Not Found
+INFO:     192.168.1.24:65158 - "GET /media/video/proyecto_20260522_224905/escena_01.png HTTP/1.1" 404 Not Found
+INFO:     192.168.1.24:65161 - "GET /media/uploads/IMG_2787.png HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65160 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65158 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65155 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65158 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65155 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65158 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65155 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65158 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65155 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65158 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57626 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65155 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65158 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65155 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65158 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65155 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65158 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65155 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65158 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65155 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65158 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65155 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65158 - "GET /api/media/list HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65155 - "GET /api/media/list HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65158 - "GET /media/video/proyecto_20260522_224905/video_20260522_224905.mp4 HTTP/1.1" 404 Not Found
+INFO:     192.168.1.24:65155 - "GET /media/video/proyecto_20260522_224905/escena_02.png HTTP/1.1" 404 Not Found
+INFO:     192.168.1.24:65158 - "GET /media/video/proyecto_20260522_224905/guion.json HTTP/1.1" 404 Not Found
+INFO:     192.168.1.24:65155 - "GET /media/video/proyecto_20260522_224905/video_20260522_224905.mp4 HTTP/1.1" 404 Not Found
+INFO:     192.168.1.24:65168 - "GET /media/video/proyecto_20260522_224905/escena_02.png HTTP/1.1" 404 Not Found
+INFO:     192.168.1.24:65171 - "GET /media/video/proyecto_20260522_224905/escena_01.png HTTP/1.1" 404 Not Found
+INFO:     192.168.1.24:65169 - "GET /media/video/proyecto_20260522_224905/guion.json HTTP/1.1" 404 Not Found
+INFO:     192.168.1.24:65170 - "GET /media/video/proyecto_20260522_224905/escena_01.png HTTP/1.1" 404 Not Found
+INFO:     192.168.1.24:65158 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65155 - "GET /api/logs HTTP/1.1" 200 OK
+2026-05-23 08:53:41,712 | INFO     | core.storage | Sincronización: Guardado archivo de sesión en OneDrive -> state/sessions/default.json
+2026-05-23 08:53:41,718 | INFO     | core.storage | Sincronización: Detectados 3 archivos multimedia para subir a la nube.
+2026-05-23 08:53:41,752 | INFO     | core.storage | Sincronización: Archivo subido a OneDrive -> media/images/imagen_20260522_223915.png
+2026-05-23 08:53:41,754 | INFO     | core.storage | Sincronización: ¡Proceso completado! 1 archivos multimedia respaldados en la nube con éxito.
+INFO:     192.168.1.24:65168 - "POST /api/onedrive/sync HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65158 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57629 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57634 - "GET /api/logs HTTP/1.1" 200 OK

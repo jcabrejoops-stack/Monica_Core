@@ -1,0 +1,2567 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Mónica – Agente IA Vibe Coding</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/style.css" />
+    <link rel="manifest" href="/static/manifest.json" />
+    <meta name="theme-color" content="#06b6d4" />
+    <link rel="icon" href="/static/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="/static/icon-192.png" />
+    <!-- Cargador de Markdown liviano para respuestas enriquecidas -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        /* Sidebar Pestañas Premium */
+        .sidebar-tab {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .sidebar-tab:hover {
+            color: #fff !important;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 6px;
+        }
+        .sidebar-tab.active {
+            color: var(--color-primary) !important;
+        }
+
+        /* Tarjetas Multimedia */
+        .media-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        .media-card:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(6, 182, 212, 0.35);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .media-preview-container {
+            width: 100%;
+            height: 110px;
+            border-radius: 8px;
+            background: #080c14;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.02);
+            cursor: pointer;
+        }
+
+        .media-preview-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+        .media-card:hover .media-preview-img {
+            transform: scale(1.05);
+        }
+
+        .media-icon-overlay {
+            position: absolute;
+            font-size: 1.8rem;
+            color: rgba(255, 255, 255, 0.9);
+            background: rgba(0, 0, 0, 0.55);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .media-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+            padding: 0 4px;
+        }
+        .media-title {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #e5e7eb;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+        .media-meta {
+            font-size: 0.7rem;
+            color: #9ca3af;
+            display: flex;
+            justify-content: space-between;
+        }
+        .media-badge {
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            background: var(--color-primary);
+            color: #fff;
+            font-size: 0.6rem;
+            font-weight: 700;
+            padding: 1px 5px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+            z-index: 2;
+        }
+        .media-delete-btn {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            background: rgba(239, 68, 68, 0.85);
+            border: none;
+            color: #fff;
+            font-size: 0.75rem;
+            width: 22px;
+            height: 22px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.2s ease, background 0.2s ease;
+            z-index: 3;
+        }
+        .media-card:hover .media-delete-btn {
+            opacity: 1;
+        }
+        .media-delete-btn:hover {
+            background: #ef4444;
+        }
+    </style>
+</head>
+<body>
+    <div id="drawer-overlay" class="drawer-overlay"></div>
+    <div class="app-wrapper">
+        <!-- LEFT SIDEBAR -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="/static/logo_monica.png" class="logo" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin: 0 auto 12px; display: block; border: 2px solid var(--color-primary); box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);" alt="Mónica Logo" />
+                <h2>Mónica 3.5</h2>
+                <span class="badge">Vibe Coding</span>
+                <div class="status-indicator">
+                    <span id="status-orb" class="status-orb pulse-green"></span>
+                    <span id="status-text" class="status-text active">MÓNICA ACTIVA</span>
+                </div>
+            </div>
+            
+            
+            <div class="sidebar-terminal" style="margin-top: auto; height: 250px;">
+                <div class="terminal-header">
+                    <span class="terminal-dot red"></span>
+                    <span class="terminal-dot yellow"></span>
+                    <span class="terminal-dot green"></span>
+                    <span class="terminal-title">Consola Agéntica</span>
+                </div>
+                <div id="event-logs" class="event-logs"></div>
+            </div>
+            
+            <div class="sidebar-footer">
+                <p>Versión 3.0 · Motor: Ollama</p>
+            </div>
+        </aside>
+
+        <!-- MAIN CHAT AREA -->
+        <main class="main-area">
+            <header class="main-header">
+                <div class="header-left" style="display:flex; align-items:center; gap:12px;">
+                    <div style="position: relative;">
+                        <h1 id="tool-title" style="margin:0; cursor:pointer; display:inline-flex; align-items:center; gap:8px; user-select:none;" title="Opciones de guardado">
+                            💬 Chat con Mónica <span id="title-chevron" style="font-size:0.8rem; opacity:0.5; transition: transform 0.3s ease; display:inline-block;">▼</span>
+                        </h1>
+                        <div id="title-dropdown" class="title-dropdown-menu" style="display: none;">
+                            <button id="sync-onedrive-btn" class="dropdown-item">
+                                <span class="item-icon">☁️</span>
+                                <div class="item-text">
+                                    <strong id="sync-btn-title">Guardar en OneDrive</strong>
+                                    <span id="sync-status-text">Sincronizar chat y archivos con la nube</span>
+                                </div>
+                            </button>
+                            <button id="video-studio-toggle-btn" class="dropdown-item">
+                                <span class="item-icon">🎬</span>
+                                <div class="item-text">
+                                    <strong id="video-btn-title">Estudio de Video</strong>
+                                    <span id="video-status-text">Crea animaciones y clips dinámicos</span>
+                                </div>
+                            </button>
+                            <button id="engine-toggle-btn" class="dropdown-item">
+                                <span class="item-icon">🚀</span>
+                                <div class="item-text">
+                                    <strong id="engine-btn-title">Motor: Modo Veloz</strong>
+                                    <span id="engine-status-text">Respuestas instantáneas en &lt; 2 segundos</span>
+                                </div>
+                            </button>
+                        </div>
+                        <p id="tool-desc" style="margin-top: 4px;">Entorno unificado de Vibe Coding. Imágenes, video, y código en vivo.</p>
+                    </div>
+                </div>
+                <div class="header-right" style="display:flex; gap:10px;">
+                    <button id="clear-chat-btn" class="header-action-btn" title="Borrar Historial">🗑️ <span>Borrar</span></button>
+                    <button id="new-chat-btn" class="header-action-btn" style="background:var(--color-primary); color:#fff; border:none;" title="Nuevo Chat">➕ <span>Nuevo</span></button>
+                    <button id="api-bunker-btn" class="header-action-btn" style="background:rgba(0, 240, 255, 0.15); border:1px solid rgba(0, 240, 255, 0.4); color:var(--text-main);" title="Búnker de APIs">🔑 <span>APIs</span></button>
+                    <button id="sidebar-toggle-btn" class="header-action-btn" title="Ver Historial" style="display:none; background:rgba(255,255,255,0.05); border:1px solid var(--glass-border); color:var(--text-main);">📂 <span>Historial</span></button>
+                </div>
+            </header>
+
+            <section id="panel-chat" class="panel active">
+                <div id="messages" class="messages"></div>
+                
+                <!-- Interfaz de Llamada Activa con Mónica -->
+                <div id="active-call-ui" style="display:none; background:rgba(168, 85, 247, 0.15); border:1px solid rgba(168, 85, 247, 0.4); border-radius:15px; padding:15px; margin: 10px 20px; text-align:center;">
+                    <div style="display:flex; justify-content:center; align-items:center; gap:15px; margin-bottom:10px;">
+                        <div class="status-orb pulse-green" style="width:15px; height:15px; background-color:#34d399;"></div>
+                        <span style="color:#f1f5f9; font-weight:600; font-size:1.1rem;">Llamada Activa con Mónica</span>
+                    </div>
+                    <p id="call-transcription" style="color:#94a3b8; font-style:italic; margin:0 0 15px 0;">Escuchando tu voz...</p>
+                    <button type="button" id="end-call-btn" style="background:#ef4444; color:white; border:none; padding:8px 20px; border-radius:20px; font-weight:bold; cursor:pointer;">Terminar Llamada</button>
+                </div>
+
+                <div id="upload-preview-container" class="upload-preview-bar" style="display:none;"></div>
+                <form id="chat-form" class="input-bar">
+                    <button type="button" id="mic-btn" class="mic-btn" title="Hablar con Mónica">🎙️</button>
+                    <button type="button" id="attach-btn" class="mic-btn" title="Adjuntar Archivo (Texto, Código, PDF o Imagen)">📎</button>
+                    <input type="file" id="file-input" multiple style="display:none;" />
+                    <input type="text" id="chat-input" placeholder="Escribe tu instrucción o pide generar imágenes/video..." autocomplete="off" />
+                    <div class="send-group" style="display: flex; gap: 8px; align-items: center;">
+                        <button type="button" id="mini-engine-toggle" class="mic-btn" style="background: rgba(168, 85, 247, 0.2); border-color: rgba(168, 85, 247, 0.5);" title="Motor Híbrido (Auto-Router Nube)">☁️</button>
+                        <button type="submit">🚀 <span>Enviar</span></button>
+                    </div>
+                </form>
+            </section>
+
+            <section id="panel-video-studio" class="panel" style="display:none; flex-direction:column; gap:20px; overflow-y:auto; padding:20px;">
+                <div class="video-studio-grid">
+                    <!-- LEFT COLUMN: CONTROLS -->
+                    <div class="studio-controls-card">
+                        <h2 style="font-size:1.4rem; margin-bottom:8px; background:linear-gradient(135deg, #06b6d4 0%, #8b5cf6 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; font-weight:800; letter-spacing:-0.02em;">Estudio de Video IA Premium</h2>
+                        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:24px; font-weight:500;">Crea animaciones cinematográficas, vivifica tus imágenes o genera videos con guion y voz artificial.</p>
+
+                        <!-- MODE SELECTOR -->
+                        <div class="studio-group">
+                            <label>Modo de Generación</label>
+                            <div class="studio-mode-selector">
+                                <button type="button" class="mode-pill active" data-mode="animation">✨ Animación Dinámica</button>
+                                <button type="button" class="mode-pill" data-mode="narrative">🎙️ Narrativa con Voz</button>
+                            </div>
+                        </div>
+
+                        <!-- DURATION SELECTOR -->
+                        <div class="studio-group">
+                            <label>Duración del Video</label>
+                            <div class="studio-duration-selector">
+                                <button type="button" class="duration-pill" data-duration="5">5s (Corto)</button>
+                                <button type="button" class="duration-pill active" data-duration="15">15s (Medio)</button>
+                                <button type="button" class="duration-pill" data-duration="30">30s (Largo)</button>
+                            </div>
+                        </div>
+
+                        <!-- STYLE CARDS -->
+                        <div class="studio-group">
+                            <label>Estilo Artístico</label>
+                            <div class="studio-style-grid">
+                                <div class="style-card active" data-style="photorealistic">
+                                    <span class="style-icon">📷</span>
+                                    <span class="style-name">Fotorrealismo</span>
+                                </div>
+                                <div class="style-card" data-style="3d-render">
+                                    <span class="style-icon">🧱</span>
+                                    <span class="style-name">Modelado 3D</span>
+                                </div>
+                                <div class="style-card" data-style="anime">
+                                    <span class="style-icon">🌸</span>
+                                    <span class="style-name">Anime</span>
+                                </div>
+                                <div class="style-card" data-style="pixel-art">
+                                    <span class="style-icon">👾</span>
+                                    <span class="style-name">Pixel Art</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- IMAGE-TO-VIDEO ZONE -->
+                        <div class="studio-group">
+                            <label>Imagen de Inicio (Opcional - Vivificación)</label>
+                            <div id="studio-drop-zone" class="studio-drop-zone">
+                                <span class="drop-icon">🖼️</span>
+                                <span class="drop-text">Arrastra una imagen aquí o haz clic para cargar</span>
+                                <span class="drop-subtext">La IA la tomará como el primer frame y la animará</span>
+                                <input type="file" id="studio-file-input" accept="image/*" style="display:none;" />
+                                <div id="studio-image-preview" class="studio-image-preview" style="display:none;">
+                                    <img src="" id="studio-preview-img" />
+                                    <button type="button" id="studio-remove-img-btn" class="remove-preview-btn">×</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PROMPT TEXTAREA -->
+                        <div class="studio-group">
+                            <label>Instrucciones de Animación (Prompt)</label>
+                            <textarea id="studio-prompt-input" placeholder="Describe el movimiento, la escena o el tema de tu video... ej: Una nave espacial cruzando un agujero de gusano hiperespacial, luces de estrellas distorsionadas, estilo interestelar..."></textarea>
+                        </div>
+
+                        <!-- GENERATE BUTTON -->
+                        <button type="button" id="studio-generate-btn" class="studio-generate-btn">
+                            🚀 <span>Generar Video Premium</span>
+                        </button>
+                    </div>
+
+                    <!-- RIGHT COLUMN: PREVIEW & REAL-TIME LOGS -->
+                    <div class="studio-preview-card">
+                        <h3 style="font-size:1.1rem; margin-bottom:15px; color:#fff; font-weight:700;">Previsualización y Progreso</h3>
+                        
+                        <!-- EMPTY STATE -->
+                        <div id="studio-empty-preview" class="studio-empty-preview">
+                            <span class="empty-icon">🎬</span>
+                            <p style="font-size:0.9rem; color:var(--text-muted); font-weight:500;">Configura las opciones de la izquierda y haz clic en "Generar Video" para ver tu creación aquí.</p>
+                        </div>
+
+                        <!-- PROGRESS BAR AND STEPS -->
+                        <div id="studio-progress-container" class="studio-progress-container" style="display:none;">
+                            <div class="studio-progress-track">
+                                <div id="studio-progress-bar" class="studio-progress-bar-fill" style="width: 0%;"></div>
+                            </div>
+                            <div id="studio-progress-percentage" class="studio-progress-percentage">0%</div>
+                            
+                            <div class="studio-steps-logs">
+                                <div class="step-log-item active" id="step-script">
+                                    <span class="step-bullet">1</span>
+                                    <span class="step-label">Generando guión cinematográfico...</span>
+                                </div>
+                                <div class="step-log-item" id="step-images">
+                                    <span class="step-bullet">2</span>
+                                    <span class="step-label">Renderizando fotogramas clave con IA...</span>
+                                </div>
+                                <div class="step-log-item" id="step-audio">
+                                    <span class="step-bullet">3</span>
+                                    <span class="step-label">Generando narración de voz (Modo Narrativo)...</span>
+                                </div>
+                                <div class="step-log-item" id="step-compose">
+                                    <span class="step-bullet">4</span>
+                                    <span class="step-label">Aplicando efectos Ken Burns y compilando MP4...</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- INTEGRATED VIDEO PLAYER -->
+                        <div id="studio-player-container" class="studio-player-container" style="display:none;">
+                            <video id="studio-video-player" controls style="width: 100%; border-radius:14px; box-shadow:0 10px 30px rgba(0,0,0,0.5);"></video>
+                            
+                            <div class="studio-player-actions" style="margin-top:20px; display:flex; gap:10px;">
+                                <a id="studio-download-btn" href="" download class="studio-action-btn download" style="flex:1; text-align:center; text-decoration:none; display:inline-block; line-height:20px;">📥 Descargar Video</a>
+                                <button type="button" id="studio-onedrive-btn" class="studio-action-btn cloud" style="flex:1;">☁️ Guardar en OneDrive</button>
+                            </div>
+                            
+                            <p style="font-size:0.75rem; color:var(--text-dark); text-align:center; margin-top:12px;">El video se ha guardado de forma permanente en tu carpeta local `media/video/`.</p>
+                        </div>
+                    </div>
+                </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Bottom Navigation Bar (Mobile Interface) -->
+            <nav class="bottom-nav">
+                <button class="bottom-nav-btn active" id="nav-btn-chats">
+                    <span class="nav-icon">👱‍♀️</span>
+                    <span>Mónica</span>
+                </button>
+                <button class="bottom-nav-btn" id="nav-btn-media">
+                    <span class="nav-icon">📚</span>
+                    <span>Multimedia</span>
+                </button>
+                <button class="bottom-nav-btn" id="nav-btn-marketing">
+                    <span class="nav-icon" style="font-weight:900; font-family:'Outfit', sans-serif;">%</span>
+                    <span>Marketing</span>
+                </button>
+            </nav>
+        </main>
+
+        <!-- RIGHT SIDEBAR (TABS: SESSIONS & MULTIMEDIA) -->
+        <aside class="sidebar-right">
+            <div class="sidebar-header" style="padding-bottom:8px; display:flex; flex-direction:column; gap:10px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; width:100%;">
+                    <h2 id="sidebar-right-title" style="font-size:1.2rem; margin:0; font-weight:700;">Panel Lateral</h2>
+                    <div style="display:flex; gap:16px; align-items:center;">
+                        <button id="header-new-chat-btn" style="background:transparent; border:none; color:var(--color-primary); font-size:1.6rem; cursor:pointer; line-height:1; padding:0;" title="Nuevo Chat">&#10010;</button>
+                        <button id="header-api-bunker-btn" style="background:transparent; border:none; color:var(--text-main); font-size:1.4rem; cursor:pointer; line-height:1; padding:0; margin-left:8px;" title="Búnker de APIs">🔑</button>
+                        <button id="close-history-btn" class="close-history-btn" style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:white; cursor:pointer; width:30px; height:30px; border-radius:8px; display:flex; justify-content:center; align-items:center; padding:0; margin-left:16px;" title="Cerrar Panel">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </button>
+                    </div>
+                </div>
+                <!-- Pestañas Premium de Historial y Herramientas (Ocultas para UI Móvil Limpia) -->
+                <div class="sidebar-tabs" style="display:none !important; width:100%; border-bottom:1px solid rgba(255,255,255,0.06); padding-bottom:3px; gap:8px;">
+                    <button id="tab-history-btn" class="sidebar-tab active" style="flex:1; background:transparent; border:none; color:#fff; font-weight:600; padding:8px 4px; cursor:pointer; font-size:0.85rem; text-align:center; border-bottom:2px solid var(--color-primary); transition: all 0.2s ease;">💬 Historial</button>
+                    <button id="tab-media-btn" class="sidebar-tab" style="flex:1; background:transparent; border:none; color:var(--text-muted); font-weight:600; padding:8px 4px; cursor:pointer; font-size:0.85rem; text-align:center; border-bottom:2px solid transparent; transition: all 0.2s ease;">🌌 Herramientas</button>
+                </div>
+            </div>
+            
+            <!-- Contenido de la pestaña Historial (Chat) -->
+            <div class="tab-content active" id="tab-history-content" style="display:flex; flex-direction:column; height:calc(100% - 100px); overflow-y:auto;">
+                <div class="tools-nav" id="sessions-list" style="margin-top: 10px;">
+                    <!-- Sesiones se llenarán por JS -->
+                </div>
+            </div>
+            
+            <!-- Contenido de la pestaña Herramientas (Subpestañas: Multimedia y Habilidades) -->
+            <div class="tab-content" id="tab-media-content" style="display:none; flex-direction:column; height:calc(100% - 100px); overflow-y:auto; padding:10px 0; gap:4px;">
+                <!-- Pastillas / Pills para alternar entre Multimedia y Habilidades (Ocultas para UI Móvil Limpia) -->
+                <div class="sub-tabs-container" style="display:none !important;">
+                    <button id="subtab-media-btn" class="sub-tab-pill active">🖼️ Multimedia</button>
+                    <button id="subtab-skills-btn" class="sub-tab-pill">⚡ Habilidades</button>
+                </div>
+                
+                <!-- Subcontenido 1: Multimedia (Galería) -->
+                <div id="subtab-media-content" style="display:flex; flex-direction:column; padding: 0 4px; gap:12px;">
+                    <div id="media-list" style="display:flex; flex-direction:column; gap:12px; padding: 4px;">
+                        <!-- Archivos multimedia se llenarán por JS -->
+                    </div>
+                </div>
+                
+                <!-- Subcontenido 2: Habilidades (Skills) -->
+                <div id="subtab-skills-content" style="display:none; flex-direction:column; padding: 0 12px 24px; gap:14px;">
+                    <div id="skills-list" style="display:flex; flex-direction:column; gap:14px;">
+                        <!-- Habilidades se llenarán por JS -->
+                    </div>
+                    
+                    <!-- Cruceta "+" para agregar nueva habilidad -->
+                    <div class="add-skill-card" id="add-skill-btn" title="Incorporar nueva habilidad a Mónica">
+                        <div class="add-skill-trigger">+</div>
+                        <span class="add-skill-text">Agregar Habilidad</span>
+                    </div>
+                    
+                    <!-- Formulario dinámico de agregar skill -->
+                    <div class="add-skill-form" id="add-skill-form-container">
+                        <label for="new-skill-name">Nombre de la habilidad</label>
+                        <input type="text" id="new-skill-name" placeholder="Ej: Generador códigos de barra y QR" />
+                        
+                        <label for="new-skill-desc">¿Qué capacidades le otorga a Mónica?</label>
+                        <textarea id="new-skill-desc" placeholder="Describe brevemente las funciones y librerías que deseas usar..."></textarea>
+                        
+                        <button class="add-skill-submit-btn" id="new-skill-submit-btn">🔍 Buscar Habilidad</button>
+                    </div>
+                    
+                    <!-- Terminal de búsqueda simulada -->
+                    <div class="terminal-search-console" id="search-console"></div>
+                    
+                    <!-- Caja de autoprogramación agéntica -->
+                    <div class="develop-skill-box" id="develop-skill-box-container">
+                        <p style="font-size:0.75rem; color:#f87171; font-weight:600; margin: 4px 0; font-family:'Fira Code',monospace;" id="search-result-error"></p>
+                        <button class="develop-skill-btn" id="confirm-develop-btn">🛠️ Desarrollar Habilidad con Mónica</button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <script>
+        // ===================== CONTROL DE DRAWER PARA MÓVIL =====================
+        function openDrawer() {
+            const sidebarRight = document.querySelector('.sidebar-right');
+            const drawerOverlay = document.getElementById('drawer-overlay');
+            if (sidebarRight && drawerOverlay) {
+                sidebarRight.classList.add('open');
+                drawerOverlay.classList.add('active');
+            }
+        }
+
+        function closeDrawer() {
+            const sidebarRight = document.querySelector('.sidebar-right');
+            const drawerOverlay = document.getElementById('drawer-overlay');
+            if (sidebarRight && drawerOverlay) {
+                sidebarRight.classList.remove('open');
+                drawerOverlay.classList.remove('active');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const sidebarToggleBtn = document.getElementById('sidebar-toggle-btn');
+            const drawerOverlay = document.getElementById('drawer-overlay');
+            const closeHistoryBtn = document.getElementById('close-history-btn');
+
+            if (sidebarToggleBtn) sidebarToggleBtn.addEventListener('click', openDrawer);
+            if (drawerOverlay) drawerOverlay.addEventListener('click', closeDrawer);
+            if (closeHistoryBtn) closeHistoryBtn.addEventListener('click', closeDrawer);
+        });
+
+        if (typeof marked !== 'undefined') {
+            marked.setOptions({ breaks: true, gfm: true });
+        }
+
+        // ===================== ESTADO DEL AGENTE =====================
+        function setAgentStatus(status) {
+            const orb = document.getElementById('status-orb');
+            const text = document.getElementById('status-text');
+            if (!orb || !text) return;
+            
+            if (status === 'processing') {
+                orb.className = 'status-orb pulse-purple';
+                text.textContent = 'PROCESANDO...';
+                text.className = 'status-text processing';
+            } else {
+                orb.className = 'status-orb pulse-green';
+                text.textContent = 'MÓNICA ACTIVA';
+                text.className = 'status-text active';
+            }
+        }
+
+        // ===================== HELPERS =====================
+        function addMsg(container, content, fromUser, isHtml = false, attachments = null, messageIndex = null) {
+            const msg = document.createElement('div');
+            msg.className = fromUser ? 'msg user' : 'msg bot';
+            if (messageIndex !== null) {
+                msg.dataset.index = messageIndex;
+            }
+            msg.dataset.originalText = content;
+            
+            // Contenedor para el texto del mensaje para separarlo del botón de editar
+            const textSpan = document.createElement('div');
+            textSpan.className = 'msg-text-content';
+            
+            if (isHtml) {
+                textSpan.innerHTML = content;
+            } else if (!fromUser) {
+                let processedContent = content;
+                const askRegex = /<ask_user\s+options="([^"]+)">([\s\S]*?)<\/ask_user>/gi;
+                processedContent = processedContent.replace(askRegex, (match, optionsStr, question) => {
+                    const options = optionsStr.split(',').map(o => o.trim());
+                    let html = `<div class="ask-user-prompt" style="margin-top: 12px; color: var(--color-primary);"><strong>${question}</strong></div>`;
+                    html += `<div class="ask-options-container">`;
+                    options.forEach(opt => {
+                        html += `<button type="button" class="ask-option-btn" onclick="const input = document.getElementById('chat-input'); input.value = this.innerText; document.getElementById('chat-form').dispatchEvent(new Event('submit'));">${opt}</button>`;
+                    });
+                    html += `<div class="ask-option-custom">
+                        <input type="text" placeholder="Escribe otra opción..." onkeydown="if(event.key === 'Enter') { const input = document.getElementById('chat-input'); input.value = this.value; document.getElementById('chat-form').dispatchEvent(new Event('submit')); }" />
+                        <button type="button" onclick="const val = this.previousElementSibling.value; if(val) { const input = document.getElementById('chat-input'); input.value = val; document.getElementById('chat-form').dispatchEvent(new Event('submit')); }">➜</button>
+                    </div></div>`;
+                    return html;
+                });
+                
+                try {
+                    if (typeof marked !== 'undefined') {
+                        textSpan.innerHTML = marked.parse(processedContent);
+                    } else {
+                        textSpan.innerHTML = processedContent;
+                    }
+                } catch (e) {
+                    textSpan.innerHTML = processedContent;
+                }
+            } else {
+                textSpan.textContent = content;
+            }
+            msg.appendChild(textSpan);
+            
+            // Renderizar adjuntos visuales si existen
+            if (attachments && attachments.length > 0) {
+                const attachWrapper = document.createElement('div');
+                attachWrapper.className = 'msg-attachments-wrapper';
+                
+                attachments.forEach(att => {
+                    const item = document.createElement('div');
+                    item.className = 'attachment-bubble-item';
+                    
+                    if (att.type && att.type.startsWith('image/')) {
+                        const img = document.createElement('img');
+                        img.src = att.url;
+                        img.className = 'chat-attachment-img';
+                        img.alt = att.filename;
+                        img.onclick = () => window.open(att.url, '_blank');
+                        item.appendChild(img);
+                    } else if ((att.type && att.type.startsWith('video/')) || att.filename.endsWith('.mp4') || att.filename.endsWith('.mov') || att.filename.endsWith('.avi') || att.filename.endsWith('.webm') || att.filename.endsWith('.mkv')) {
+                        const video = document.createElement('video');
+                        video.src = att.url;
+                        video.controls = true;
+                        video.className = 'chat-attachment-video';
+                        video.style.maxWidth = '100%';
+                        video.style.maxHeight = '240px';
+                        video.style.borderRadius = '10px';
+                        video.style.display = 'block';
+                        item.appendChild(video);
+                    } else {
+                        let icon = '📄';
+                        if (att.filename.endsWith('.pdf')) icon = '📕';
+                        else if (att.filename.endsWith('.py') || att.filename.endsWith('.js')) icon = '⚙️';
+                        else if (att.filename.endsWith('.csv') || att.filename.endsWith('.json')) icon = '📊';
+                        
+                        const sizeKb = (att.size / 1024).toFixed(1);
+                        item.innerHTML = `
+                            <a href="${att.url}" target="_blank" class="attachment-file-link">
+                                <span class="attachment-icon">${icon}</span>
+                                <div class="attachment-details">
+                                    <span class="attachment-name">${att.filename}</span>
+                                    <span class="attachment-size">${sizeKb} KB</span>
+                                </div>
+                            </a>
+                        `;
+                    }
+                    attachWrapper.appendChild(item);
+                });
+                msg.appendChild(attachWrapper);
+            }
+            
+            // Botón de edición para burbujas de usuario
+            if (fromUser && messageIndex !== null) {
+                const editBtn = document.createElement('button');
+                editBtn.className = 'msg-edit-btn';
+                editBtn.innerHTML = '✏️';
+                editBtn.title = "Editar petición";
+                editBtn.type = "button";
+                editBtn.onclick = (e) => {
+                    e.stopPropagation();
+                    startEditMsg(msg, messageIndex);
+                };
+                msg.appendChild(editBtn);
+            }
+            
+            container.appendChild(msg);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        // ===================== EDICIÓN EN CALIENTE DE MENSAJES =====================
+        function startEditMsg(msgElement, index) {
+            // Guardar el HTML completo del mensaje para restaurar al cancelar
+            msgElement.dataset.savedHtml = msgElement.innerHTML;
+            
+            const originalText = msgElement.dataset.originalText || "";
+            
+            // Mantener adjuntos visibles si existen
+            const attachmentsWrapper = msgElement.querySelector('.msg-attachments-wrapper');
+            const attachmentsHtml = attachmentsWrapper ? attachmentsWrapper.outerHTML : '';
+            
+            msgElement.innerHTML = `
+                <div class="msg-edit-container">
+                    <textarea class="msg-edit-textarea">${originalText}</textarea>
+                    <div class="msg-edit-actions">
+                        <button type="button" class="edit-action-btn save" onclick="saveEditMsg(this, ${index})">Guardar</button>
+                        <button type="button" class="edit-action-btn cancel" onclick="cancelEditMsg(this)">Cancelar</button>
+                    </div>
+                </div>
+                ${attachmentsHtml}
+            `;
+            
+            const textarea = msgElement.querySelector('.msg-edit-textarea');
+            textarea.focus();
+            textarea.setSelectionRange(textarea.value.length, textarea.value.length);
+        }
+
+        function cancelEditMsg(btnElement) {
+            const msgElement = btnElement.closest('.msg.user');
+            if (msgElement && msgElement.dataset.savedHtml) {
+                msgElement.innerHTML = msgElement.dataset.savedHtml;
+                // Re-enlazar el listener del botón lápiz
+                const editBtn = msgElement.querySelector('.msg-edit-btn');
+                if (editBtn) {
+                    const index = parseInt(msgElement.dataset.index);
+                    editBtn.onclick = (e) => {
+                        e.stopPropagation();
+                        startEditMsg(msgElement, index);
+                    };
+                }
+            }
+        }
+
+        async function saveEditMsg(btnElement, index) {
+            const msgElement = btnElement.closest('.msg.user');
+            const textarea = msgElement.querySelector('.msg-edit-textarea');
+            const newText = textarea.value.trim();
+            if (!newText) return;
+            
+            try {
+                // Ocultar botones y poner indicador de carga
+                const actionsDiv = msgElement.querySelector('.msg-edit-actions');
+                actionsDiv.innerHTML = '<span style="font-size:0.8rem; color:var(--text-muted);">Guardando...</span>';
+                
+                const resp = await fetch('/api/chat/edit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        session_id: currentSessionId,
+                        message_index: index,
+                        new_content: newText
+                    })
+                });
+                
+                const data = await resp.json();
+                if (data.error) {
+                    alert("Error al guardar la edición: " + data.error);
+                    cancelEditMsg(btnElement);
+                    return;
+                }
+                
+                // Recargar el historial completo (que ahora estará truncado)
+                await loadChatHistory();
+                
+                // Cargar el texto en la barra de chat y auto-enviar
+                const chatInput = document.getElementById('chat-input');
+                chatInput.value = newText;
+                chatInput.focus();
+                
+                document.getElementById('chat-form').dispatchEvent(new Event('submit'));
+                
+            } catch (err) {
+                console.error("Error al guardar edición:", err);
+                alert("Error de red: " + err.message);
+                cancelEditMsg(btnElement);
+            }
+        }
+
+        function addLoading(container) {
+            const loader = document.createElement('div');
+            loader.className = 'msg bot loading';
+            
+            const dots = document.createElement('div');
+            dots.className = 'loading-dots';
+            dots.innerHTML = '<span class="dot"></span><span class="dot"></span><span class="dot"></span>';
+            loader.appendChild(dots);
+            
+            const textSpan = document.createElement('span');
+            textSpan.className = 'loading-text';
+            textSpan.textContent = 'Mónica está procesando tu petición...';
+            loader.appendChild(textSpan);
+            
+            container.appendChild(loader);
+            container.scrollTop = container.scrollHeight;
+            
+            const messages = [
+                "Pensando y procesando...",
+                "Diseñando lógica y contenido...",
+                "Escribiendo archivos de código fuente...",
+                "Generando recursos visuales o ejecutando comandos..."
+            ];
+            let idx = 0;
+            const intervalId = setInterval(() => {
+                if (document.body.contains(loader)) {
+                    textSpan.textContent = messages[idx % messages.length];
+                    idx++;
+                } else {
+                    clearInterval(intervalId);
+                }
+            }, 4500);
+            
+            loader.dataset.intervalId = intervalId;
+            return loader;
+        }
+
+        // ===================== SESIONES E HISTORIAL =====================
+        let currentSessionId = "default";
+        const messagesDiv = document.getElementById('messages');
+        const welcomeText = "¡Hola! Soy **Mónica 3.0**, tu agente autónoma de Vibe Coding. Ahora todo está unificado. Puedes pedirme que programe, ejecute comandos en tu PC, o incluso que **genere imágenes y videos** directamente en este chat. ¿Qué creamos hoy?";
+
+        async function loadSessions() {
+            try {
+                const resp = await fetch('/api/chat/sessions');
+                const data = await resp.json();
+                const list = document.getElementById('sessions-list');
+                list.innerHTML = '';
+                
+                if (data.sessions && data.sessions.length > 0) {
+                    data.sessions.forEach(s => {
+                        const btn = document.createElement('div');
+                        btn.className = 'session-btn' + (s.id === currentSessionId ? ' active' : '');
+                        btn.style.flexDirection = 'row';
+                        btn.style.justifyContent = 'space-between';
+                        btn.style.alignItems = 'center';
+                        
+                        const dateStr = new Date(s.updated_at * 1000).toLocaleString('es-ES', {hour: '2-digit', minute:'2-digit', day:'numeric', month:'short'});
+                        
+                        const infoDiv = document.createElement('div');
+                        infoDiv.style.display = 'flex';
+                        infoDiv.style.flexDirection = 'column';
+                        infoDiv.style.alignItems = 'flex-start';
+                        infoDiv.style.flex = '1';
+                        infoDiv.style.cursor = 'pointer';
+                        infoDiv.style.overflow = 'hidden';
+                        infoDiv.innerHTML = `<strong style="text-align:left; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; width:100%; max-width:180px;">${s.title}</strong><span style="font-size:0.75rem;">${dateStr}</span>`;
+                        infoDiv.onclick = () => {
+                            switchSession(s.id);
+                            if (typeof closeDrawer === 'function') closeDrawer();
+                        };
+
+                        const actionsDiv = document.createElement('div');
+                        actionsDiv.style.display = 'flex';
+                        actionsDiv.style.gap = '12px';
+
+                        const editBtn = document.createElement('button');
+                        editBtn.innerHTML = '✏️';
+                        editBtn.style.background = 'transparent';
+                        editBtn.style.border = 'none';
+                        editBtn.style.cursor = 'pointer';
+                        editBtn.style.padding = '0';
+                        editBtn.title = 'Editar nombre';
+                        editBtn.onclick = (e) => {
+                            e.stopPropagation();
+                            editSessionName(s.id, s.title);
+                        };
+
+                        const delBtn = document.createElement('button');
+                        delBtn.innerHTML = '🗑️';
+                        delBtn.style.background = 'transparent';
+                        delBtn.style.border = 'none';
+                        delBtn.style.cursor = 'pointer';
+                        delBtn.style.padding = '0';
+                        delBtn.title = 'Borrar chat';
+                        delBtn.onclick = (e) => {
+                            e.stopPropagation();
+                            deleteSession(s.id);
+                        };
+
+                        actionsDiv.appendChild(editBtn);
+                        actionsDiv.appendChild(delBtn);
+
+                        btn.appendChild(infoDiv);
+                        btn.appendChild(actionsDiv);
+                        list.appendChild(btn);
+                    });
+                }
+            } catch (e) {
+                console.error("Error cargando sesiones:", e);
+            }
+        }
+
+        async function editSessionName(sessionId, currentName) {
+            const newName = prompt("Nuevo nombre para el chat:", currentName);
+            if (newName && newName.trim() !== "" && newName !== currentName) {
+                try {
+                    await fetch(`/api/chat/sessions/${sessionId}`, {
+                        method: 'PUT',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({title: newName.trim()})
+                    });
+                    loadSessions();
+                } catch (e) { console.error(e); }
+            }
+        }
+
+        async function deleteSession(sessionId) {
+            if (confirm("¿Estás seguro de que quieres borrar este chat y todo su contenido multimedia?")) {
+                try {
+                    await fetch(`/api/chat/sessions/${sessionId}`, { method: 'DELETE' });
+                    if (currentSessionId === sessionId) {
+                        currentSessionId = "default";
+                        messagesDiv.innerHTML = '';
+                        addMsg(messagesDiv, welcomeText, false);
+                    }
+                    loadSessions();
+                } catch (e) { console.error(e); }
+            }
+        }
+        async function switchSession(sessionId) {
+            currentSessionId = sessionId;
+            loadSessions(); // Para actualizar clase active
+            await loadChatHistory();
+        }
+
+        document.getElementById('new-chat-btn').addEventListener('click', () => {
+            currentSessionId = "session_" + Date.now();
+            messagesDiv.innerHTML = '';
+            addMsg(messagesDiv, welcomeText, false);
+            loadSessions();
+        });
+        
+        document.getElementById('header-new-chat-btn').addEventListener('click', () => {
+            currentSessionId = "session_" + Date.now();
+            messagesDiv.innerHTML = '';
+            addMsg(messagesDiv, welcomeText, false);
+            loadSessions();
+            if (typeof closeDrawer === 'function') closeDrawer();
+        });
+
+        async function loadChatHistory() {
+            try {
+                const resp = await fetch(`/api/chat/history?session_id=${currentSessionId}`);
+                const data = await resp.json();
+                messagesDiv.innerHTML = '';
+                if (data.history && data.history.length > 0) {
+                    data.history.forEach((msg, idx) => {
+                        const fromUser = msg.role === 'user';
+                        addMsg(messagesDiv, msg.content, fromUser, false, msg.attachments || null, idx);
+                    });
+                } else {
+                    addMsg(messagesDiv, welcomeText, false);
+                }
+            } catch (e) {
+                console.error("Error cargando el historial:", e);
+                messagesDiv.innerHTML = '';
+                addMsg(messagesDiv, welcomeText, false);
+            }
+        }
+        
+        loadChatHistory();
+        loadSessions();
+
+        document.getElementById('clear-chat-btn').addEventListener('click', async () => {
+            if (!confirm('¿Estás seguro de que quieres borrar este chat y eliminar permanentemente todos sus archivos, imágenes y videos asociados de tu disco duro? Esta acción es definitiva y liberará espacio en tu servidor.')) return;
+            try {
+                await fetch('/api/chat/clear', { 
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ session_id: currentSessionId })
+                });
+                messagesDiv.innerHTML = '';
+                // Redirigir de forma inmediata a una sesión nueva y fresca para que no intente re-escribir en la ID eliminada
+                currentSessionId = "session_" + Date.now();
+                addMsg(messagesDiv, welcomeText, false);
+                await loadSessions();
+            } catch (err) {
+                console.error("Error al borrar chat:", err);
+            }
+        });
+
+        let uploadedAttachments = [];
+
+        // ===================== CONTROL DE ARCHIVOS ADJUNTOS =====================
+        const attachBtn = document.getElementById('attach-btn');
+        const fileInput = document.getElementById('file-input');
+        const previewContainer = document.getElementById('upload-preview-container');
+
+        async function processFilesForUpload(files) {
+            if (!files || files.length === 0) return;
+
+            previewContainer.style.display = 'flex';
+
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                const uniqueId = `pill-${Date.now()}-${i}`;
+                
+                // Crear un pill/chip de previsualización con spinner de carga
+                const pill = document.createElement('div');
+                pill.className = 'upload-preview-pill loading';
+                pill.id = uniqueId;
+                pill.innerHTML = `
+                    <span class="pill-icon">⏳</span>
+                    <span class="pill-name">${file.name}</span>
+                    <button type="button" class="pill-remove">×</button>
+                `;
+                previewContainer.appendChild(pill);
+
+                // Realizar subida en segundo plano
+                const formData = new FormData();
+                formData.append('file', file);
+
+                try {
+                    const resp = await fetch('/api/upload', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    const data = await resp.json();
+
+                    if (data.error) {
+                        throw new Error(data.error);
+                    }
+
+                    // Éxito: Actualizar el chip a completado
+                    pill.classList.remove('loading');
+                    pill.classList.add('success');
+                    
+                    let fileIcon = '📄';
+                    if (file.name.endsWith('.pdf')) fileIcon = '📕';
+                    else if (file.type.startsWith('image/')) fileIcon = '🖼️';
+                    else if (file.name.endsWith('.py') || file.name.endsWith('.js')) fileIcon = '⚙️';
+                    
+                    pill.querySelector('.pill-icon').textContent = fileIcon;
+                    
+                    const attachmentObj = {
+                        filename: data.filename,
+                        url: data.url,
+                        type: data.type,
+                        size: data.size
+                    };
+                    uploadedAttachments.push(attachmentObj);
+
+                    // Configurar eliminación
+                    pill.querySelector('.pill-remove').onclick = () => {
+                        uploadedAttachments = uploadedAttachments.filter(att => att.url !== data.url);
+                        pill.remove();
+                        if (uploadedAttachments.length === 0) {
+                            previewContainer.style.display = 'none';
+                        }
+                    };
+
+                } catch (err) {
+                    console.error("Error subiendo archivo:", err);
+                    pill.classList.remove('loading');
+                    pill.classList.add('error');
+                    pill.querySelector('.pill-icon').textContent = '❌';
+                    pill.querySelector('.pill-name').textContent = `${file.name} (Error)`;
+                    
+                    // Autodelete el pill de error tras 4 segundos
+                    setTimeout(() => {
+                        pill.remove();
+                        if (previewContainer.children.length === 0) {
+                            previewContainer.style.display = 'none';
+                        }
+                    }, 4000);
+                }
+            }
+        }
+
+        if (attachBtn && fileInput && previewContainer) {
+            attachBtn.addEventListener('click', () => {
+                fileInput.click();
+            });
+
+            fileInput.addEventListener('change', async (e) => {
+                await processFilesForUpload(e.target.files);
+                fileInput.value = '';
+            });
+        }
+
+        // --- DRAG AND DROP ---
+        const panelChatDrop = document.getElementById('panel-chat');
+        if (panelChatDrop) {
+            panelChatDrop.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                panelChatDrop.style.boxShadow = 'inset 0 0 50px rgba(168, 85, 247, 0.15)';
+            });
+            panelChatDrop.addEventListener('dragleave', (e) => {
+                e.preventDefault();
+                panelChatDrop.style.boxShadow = 'none';
+            });
+            panelChatDrop.addEventListener('drop', (e) => {
+                e.preventDefault();
+                panelChatDrop.style.boxShadow = 'none';
+                if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+                    processFilesForUpload(e.dataTransfer.files);
+                }
+            });
+        }
+
+        let activeAbortController = null;
+        const chatForm = document.getElementById('chat-form');
+        const submitBtn = chatForm.querySelector('button[type="submit"]');
+        const originalButtonHtml = submitBtn.innerHTML;
+
+        chatForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Si está cargando y se le da click, se cancela el razonamiento
+            if (submitBtn.classList.contains('loading-state')) {
+                if (activeAbortController) {
+                    activeAbortController.abort();
+                }
+                return;
+            }
+            
+            const input = document.getElementById('chat-input');
+            const text = input.value.trim();
+            if (!text && uploadedAttachments.length === 0) return;
+            
+            const attachmentsToSend = [...uploadedAttachments];
+            
+
+            
+            // Estimar el índice para permitir edición inmediata del mensaje enviado
+            let estimatedIndex = null;
+            try {
+                const historyResp = await fetch(`/api/chat/history?session_id=${currentSessionId}`);
+                const historyData = await historyResp.json();
+                estimatedIndex = historyData.history ? historyData.history.length : 0;
+            } catch (err) {
+                console.error("Error estimando índice de mensaje:", err);
+            }
+            
+            addMsg(messagesDiv, text, true, false, attachmentsToSend, estimatedIndex);
+            
+            input.value = '';
+            uploadedAttachments = [];
+
+            if (previewContainer) {
+                previewContainer.innerHTML = '';
+                previewContainer.style.display = 'none';
+            }
+            
+            setAgentStatus('processing');
+            submitBtn.classList.add('loading-state');
+            submitBtn.title = "Cancelar razonamiento";
+            submitBtn.innerHTML = `
+                <div class="cancel-dots">
+                    <span class="c-dot"></span>
+                    <span class="c-dot"></span>
+                    <span class="c-dot"></span>
+                </div>
+            `;
+            
+            const loader = addLoading(messagesDiv);
+            activeAbortController = new AbortController();
+            
+            try {
+                const resp = await fetch('/api/message', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        message: text, 
+                        attachments: attachmentsToSend, 
+                        session_id: currentSessionId,
+                        engine: selectedEngine
+                    }),
+                    signal: activeAbortController.signal
+                });
+                const data = await resp.json();
+                loader.remove();
+                setAgentStatus('active');
+                addMsg(messagesDiv, data.response || data.error || 'Sin respuesta', false);
+                loadSessions(); // Actualizar títulos de sesiones
+            } catch (err) {
+                loader.remove();
+                setAgentStatus('active');
+                if (err.name === 'AbortError') {
+                    addMsg(messagesDiv, '*[Razonamiento cancelado por el usuario]*', false, false);
+                } else {
+                    addMsg(messagesDiv, '❌ Error de red: ' + err.message, false);
+                }
+            } finally {
+                submitBtn.classList.remove('loading-state');
+                submitBtn.title = "Enviar mensaje";
+                submitBtn.innerHTML = originalButtonHtml;
+                activeAbortController = null;
+            }
+        });
+
+        // ===================== RECONOCIMIENTO DE VOZ =====================
+        const micBtn = document.getElementById('mic-btn');
+        const chatInput = document.getElementById('chat-input');
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        
+        if (SpeechRecognition) {
+            const recognition = new SpeechRecognition();
+            recognition.continuous = true; // Permite hablar continuamente con pausas
+            recognition.interimResults = true; // Transcripción en tiempo real
+            recognition.lang = 'es-ES'; // Idioma español
+            
+            let finalTranscript = '';
+
+            recognition.onstart = () => {
+                micBtn.classList.add('listening');
+                chatInput.placeholder = "Escuchando... Habla ahora.";
+                // Inicializar finalTranscript con el texto que ya exista en la barra, agregando un espacio si es necesario
+                const existingVal = chatInput.value.trim();
+                finalTranscript = existingVal ? existingVal + ' ' : '';
+            };
+
+            recognition.onresult = (event) => {
+                let interimTranscript = '';
+                for (let i = event.resultIndex; i < event.results.length; ++i) {
+                    if (event.results[i].isFinal) {
+                        finalTranscript += event.results[i][0].transcript;
+                    } else {
+                        interimTranscript += event.results[i][0].transcript;
+                    }
+                }
+                const currentText = finalTranscript + interimTranscript;
+                if (currentText.trim()) {
+                    chatInput.value = currentText;
+                }
+            };
+
+            recognition.onerror = (event) => {
+                console.error("Error de voz:", event.error);
+                micBtn.classList.remove('listening');
+                chatInput.placeholder = "Escribe tu instrucción o pide generar imágenes/video...";
+            };
+
+            recognition.onend = () => {
+                micBtn.classList.remove('listening');
+                chatInput.placeholder = "Escribe tu instrucción o pide generar imágenes/video...";
+            };
+
+            micBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (micBtn.classList.contains('listening')) {
+                    recognition.stop();
+                } else {
+                    recognition.start();
+                }
+            });
+        } else {
+            // Mantener el botón visible pero dar feedback premium del por qué iOS bloquea micrófono en HTTP
+            micBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                alert(
+                    "🎙️ Conexión Segura (HTTPS) Requerida\n\n" +
+                    "El reconocimiento de voz en navegadores móviles (como Safari/Chrome en iPhone) requiere obligatoriamente una conexión segura HTTPS por políticas de privacidad del sistema operativo.\n\n" +
+                    "Para usar tu voz:\n" +
+                    "1. Abre Mónica en tu ordenador mediante el Acceso Directo (donde 'localhost' se considera seguro y permite el micrófono).\n" +
+                    "2. Configura un certificado SSL (HTTPS) en el servidor de Mónica.\n\n" +
+                    "¡Por ahora, puedes escribir tus instrucciones y subir archivos libremente!"
+                );
+            });
+            console.warn("SpeechRecognition no está soportado en este navegador o contexto inseguro.");
+        }
+
+        // ===================== CONSOLA DE EVENTOS EN VIVO =====================
+        let lastLogsStr = "";
+        async function pollLogs() {
+            try {
+                const resp = await fetch('/api/logs');
+                const data = await resp.json();
+                if (data.logs) {
+                    const logsStr = data.logs.join('\n');
+                    const eventLogsDiv = document.getElementById('event-logs');
+                    if (eventLogsDiv && lastLogsStr !== logsStr) {
+                        lastLogsStr = logsStr;
+                        eventLogsDiv.innerHTML = '';
+                        data.logs.forEach(log => {
+                            const logLine = document.createElement('div');
+                            logLine.className = 'log-line';
+                            
+                            if (log.includes('Mónica Agentic: Escribió') || log.includes('Archivo escrito automáticamente')) {
+                                logLine.classList.add('log-write');
+                            } else if (log.includes('Ejecutando comando') || log.includes('Comando ejecutado')) {
+                                logLine.classList.add('log-cmd');
+                            } else if (log.includes('Generando') || log.includes('Audio generado') || log.includes('Video generado') || log.includes('Imagen generada')) {
+                                logLine.style.color = '#e879f9';
+                                logLine.style.borderLeftColor = '#e879f9';
+                            } else if (log.includes('Error') || log.includes('❌')) {
+                                logLine.classList.add('log-error');
+                            } else if (log.includes('Servidor web') || log.includes('iniciado')) {
+                                logLine.classList.add('log-system');
+                            }
+                            
+                            logLine.textContent = log;
+                            eventLogsDiv.appendChild(logLine);
+                        });
+                        eventLogsDiv.scrollTop = eventLogsDiv.scrollHeight;
+                    }
+                }
+            } catch (e) {
+                console.error("Error al obtener logs:", e);
+            }
+        }
+        setInterval(pollLogs, 2000);
+        pollLogs();
+
+        // ===================== DESPLEGABLE DE TÍTULO Y SINCRONIZACIÓN MANUAL DE ONEDRIVE =====================
+        const toolTitle = document.getElementById('tool-title');
+        const titleChevron = document.getElementById('title-chevron');
+        const titleDropdown = document.getElementById('title-dropdown');
+        const syncOnedriveBtn = document.getElementById('sync-onedrive-btn');
+        const syncBtnTitle = document.getElementById('sync-btn-title');
+        const syncStatusText = document.getElementById('sync-status-text');
+
+        function toggleTitleDropdown(e) {
+            e.stopPropagation();
+            const isVisible = titleDropdown.style.display === 'block';
+            const currentChevron = document.getElementById('title-chevron');
+            if (isVisible) {
+                closeTitleDropdown();
+            } else {
+                titleDropdown.style.display = 'block';
+                if (currentChevron) currentChevron.classList.add('title-chevron-rotate');
+            }
+        }
+
+        function closeTitleDropdown() {
+            titleDropdown.style.display = 'none';
+            const currentChevron = document.getElementById('title-chevron');
+            if (currentChevron) currentChevron.classList.remove('title-chevron-rotate');
+        }
+
+        toolTitle.addEventListener('click', toggleTitleDropdown);
+
+        // Cerrar dropdown si se hace click fuera
+        document.addEventListener('click', (e) => {
+            if (!toolTitle.contains(e.target)) {
+                closeTitleDropdown();
+            }
+        });
+
+        syncOnedriveBtn.addEventListener('click', async (e) => {
+            e.stopPropagation();
+            
+            // Estado de carga visual
+            syncOnedriveBtn.disabled = true;
+            syncOnedriveBtn.style.opacity = '0.75';
+            syncBtnTitle.textContent = '☁️ Sincronizando...';
+            syncStatusText.textContent = 'Subiendo chat y archivos multimedia a OneDrive';
+            
+            try {
+                const resp = await fetch('/api/onedrive/sync', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ session_id: currentSessionId })
+                });
+                
+                const data = await resp.json();
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+                
+                // Éxito
+                syncBtnTitle.textContent = '✅ ¡Sincronizado con éxito!';
+                syncStatusText.textContent = 'Todo tu historial y archivos están respaldados en la nube';
+                syncOnedriveBtn.style.color = '#34d399';
+                
+                // Restaurar el botón tras 3 segundos
+                setTimeout(() => {
+                    syncBtnTitle.textContent = 'Guardar en OneDrive';
+                    syncStatusText.textContent = 'Sincronizar chat y archivos con la nube';
+                    syncOnedriveBtn.style.color = '';
+                    syncOnedriveBtn.disabled = false;
+                    syncOnedriveBtn.style.opacity = '';
+                    closeTitleDropdown();
+                }, 3000);
+                
+            } catch (err) {
+                console.error("Error en sincronización manual:", err);
+                syncBtnTitle.textContent = '❌ Error al sincronizar';
+                syncStatusText.textContent = err.message || 'Verifica tu conexión y logs en la consola';
+                syncOnedriveBtn.style.color = '#f87171';
+                
+                setTimeout(() => {
+                    syncBtnTitle.textContent = 'Guardar en OneDrive';
+                    syncStatusText.textContent = 'Sincronizar chat y archivos con la nube';
+                    syncOnedriveBtn.style.color = '';
+                    syncOnedriveBtn.disabled = false;
+                    syncOnedriveBtn.style.opacity = '';
+                }, 3500);
+            }
+        });
+
+        // ===================== ESTUDIO DE VIDEO IA PREMIUM =====================
+        const videoStudioToggleBtn = document.getElementById('video-studio-toggle-btn');
+        const panelChat = document.getElementById('panel-chat');
+        const panelVideoStudio = document.getElementById('panel-video-studio');
+        
+        let studioImageUrl = null;
+        let selectedMode = "animation";
+        let selectedDuration = 15;
+        let selectedStyle = "photorealistic";
+
+        // Alternar paneles
+        videoStudioToggleBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isStudioActive = panelVideoStudio.style.display === 'flex';
+            const toolTitle = document.getElementById('tool-title');
+            
+            if (isStudioActive) {
+                // Volver al chat
+                panelVideoStudio.style.display = 'none';
+                panelChat.style.display = 'flex';
+                
+                toolTitle.innerHTML = '💬 Chat con Mónica <span id="title-chevron" style="font-size:0.8rem; opacity:0.5; transition: transform 0.3s ease; display:inline-block;">▼</span>';
+                
+                // Actualizar el botón dentro del dropdown
+                videoStudioToggleBtn.innerHTML = `
+                    <span class="item-icon">🎬</span>
+                    <div class="item-text">
+                        <strong id="video-btn-title">Estudio de Video</strong>
+                        <span id="video-status-text">Crea animaciones y clips dinámicos</span>
+                    </div>
+                `;
+            } else {
+                // Ir al estudio
+                panelChat.style.display = 'none';
+                panelVideoStudio.style.display = 'flex';
+                
+                toolTitle.innerHTML = '🎬 Estudio de Video <span id="title-chevron" style="font-size:0.8rem; opacity:0.5; transition: transform 0.3s ease; display:inline-block;">▼</span>';
+                
+                // Actualizar el botón dentro del dropdown
+                videoStudioToggleBtn.innerHTML = `
+                    <span class="item-icon">💬</span>
+                    <div class="item-text">
+                        <strong id="video-btn-title">Volver al Chat</strong>
+                        <span id="video-status-text">Regresa a tu conversación con Mónica</span>
+                    </div>
+                `;
+            }
+            closeTitleDropdown();
+        });
+
+        // ===================== GESTIÓN DEL MOTOR DE INTELIGENCIA =====================
+        const engineToggleBtn = document.getElementById('engine-toggle-btn');
+        const engineBtnTitle = document.getElementById('engine-btn-title');
+        const engineStatusText = document.getElementById('engine-status-text');
+        const sidebarFooterText = document.querySelector('.sidebar-footer p');
+
+        let selectedEngine = localStorage.getItem("selectedEngine") || "hybrid";
+
+        function updateEngineUI() {
+            const miniBtn = document.getElementById('mini-engine-toggle');
+            if (selectedEngine === "hybrid") {
+                if (engineBtnTitle) engineBtnTitle.textContent = "Motor: Híbrido (Nube+Local)";
+                if (engineStatusText) engineStatusText.textContent = "Auto-Router OpenRouter/Groq";
+                if (sidebarFooterText) sidebarFooterText.textContent = "Versión 3.0 • Motor: Híbrido";
+                if (miniBtn) {
+                    miniBtn.textContent = '☁️';
+                    miniBtn.title = "Modo: Híbrido (Nube + Local Fallback)";
+                    miniBtn.style.background = 'rgba(168, 85, 247, 0.2)';
+                    miniBtn.style.borderColor = 'rgba(168, 85, 247, 0.5)';
+                }
+            } else {
+                if (engineBtnTitle) engineBtnTitle.textContent = "Motor: Modo Soberano";
+                if (engineStatusText) engineStatusText.textContent = "Procesamiento local 100% offline";
+                if (sidebarFooterText) sidebarFooterText.textContent = "Versión 3.0 • Motor: Ollama (Local)";
+                if (miniBtn) {
+                    miniBtn.textContent = '🧠';
+                    miniBtn.title = "Modo: Soberano (100% Local)";
+                    miniBtn.style.background = 'rgba(16, 185, 129, 0.2)';
+                    miniBtn.style.borderColor = 'rgba(16, 185, 129, 0.5)';
+                }
+            }
+        }
+
+        // Sincronizar UI al inicio
+        updateEngineUI();
+
+        function toggleEngine() {
+            selectedEngine = selectedEngine === "hybrid" ? "local" : "hybrid";
+            localStorage.setItem("selectedEngine", selectedEngine);
+            updateEngineUI();
+            
+            // Animación de pulso visual
+            if(engineToggleBtn) {
+                engineToggleBtn.style.animation = 'none';
+                setTimeout(() => { engineToggleBtn.style.animation = 'pulse-cyan 0.5s ease-in-out'; }, 10);
+            }
+            const miniBtn = document.getElementById('mini-engine-toggle');
+            if(miniBtn) {
+                miniBtn.style.transform = 'scale(0.9)';
+                setTimeout(() => { miniBtn.style.transform = 'scale(1)'; }, 150);
+            }
+            
+            const eventLogsDiv = document.getElementById('event-logs');
+            if (eventLogsDiv) {
+                const logLine = document.createElement('div');
+                logLine.className = 'log-line log-system';
+                logLine.textContent = `Motor cambiado a: ${selectedEngine === "hybrid" ? "Modo Híbrido (Nube+Local)" : "Modo Soberano (Local)"}`;
+                eventLogsDiv.appendChild(logLine);
+                eventLogsDiv.scrollTop = eventLogsDiv.scrollHeight;
+            }
+        }
+
+        if (engineToggleBtn) {
+            engineToggleBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleEngine();
+            });
+        }
+        
+        const miniBtn = document.getElementById('mini-engine-toggle');
+        if (miniBtn) {
+            miniBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleEngine();
+            });
+        }
+
+        // Configurar selectores de modo
+        const modePills = document.querySelectorAll('.mode-pill');
+        modePills.forEach(pill => {
+            pill.addEventListener('click', () => {
+                modePills.forEach(p => p.classList.remove('active'));
+                pill.classList.add('active');
+                selectedMode = pill.dataset.mode;
+                
+                // Mostrar/ocultar paso de audio en los logs visuales de progreso
+                const stepAudio = document.getElementById('step-audio');
+                if (selectedMode === 'narrative') {
+                    stepAudio.style.display = 'flex';
+                } else {
+                    stepAudio.style.display = 'none';
+                }
+            });
+        });
+
+        // Configurar selectores de duración
+        const durationPills = document.querySelectorAll('.duration-pill');
+        durationPills.forEach(pill => {
+            pill.addEventListener('click', () => {
+                durationPills.forEach(p => p.classList.remove('active'));
+                pill.classList.add('active');
+                selectedDuration = parseInt(pill.dataset.duration);
+            });
+        });
+
+        // Configurar selectores de estilo
+        const styleCards = document.querySelectorAll('.style-card');
+        styleCards.forEach(card => {
+            card.addEventListener('click', () => {
+                styleCards.forEach(c => c.classList.remove('active'));
+                card.classList.add('active');
+                selectedStyle = card.dataset.style;
+            });
+        });
+
+        // Drag & Drop de imagen de inicio
+        const dropZone = document.getElementById('studio-drop-zone');
+        const studioFileInput = document.getElementById('studio-file-input');
+        const studioImagePreview = document.getElementById('studio-image-preview');
+        const studioPreviewImg = document.getElementById('studio-preview-img');
+        const studioRemoveImgBtn = document.getElementById('studio-remove-img-btn');
+
+        dropZone.addEventListener('click', (e) => {
+            if (e.target !== studioRemoveImgBtn && !studioRemoveImgBtn.contains(e.target)) {
+                studioFileInput.click();
+            }
+        });
+
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('dragover');
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('dragover');
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0 && files[0].type.startsWith('image/')) {
+                uploadStudioImage(files[0]);
+            }
+        });
+
+        studioFileInput.addEventListener('change', (e) => {
+            const files = e.target.files;
+            if (files.length > 0) {
+                uploadStudioImage(files[0]);
+            }
+        });
+
+        studioRemoveImgBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            studioImageUrl = null;
+            studioPreviewImg.src = '';
+            studioImagePreview.style.display = 'none';
+            dropZone.querySelector('.drop-icon').style.display = 'block';
+            dropZone.querySelector('.drop-text').style.display = 'block';
+            dropZone.querySelector('.drop-subtext').style.display = 'block';
+            studioFileInput.value = '';
+        });
+
+        async function uploadStudioImage(file) {
+            dropZone.classList.add('uploading');
+            dropZone.querySelector('.drop-text').textContent = 'Subiendo imagen inicial...';
+            
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                const resp = await fetch('/api/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await resp.json();
+                if (data.error) throw new Error(data.error);
+
+                studioImageUrl = data.url;
+                studioPreviewImg.src = data.url;
+                studioImagePreview.style.display = 'block';
+                
+                dropZone.classList.remove('uploading');
+                dropZone.querySelector('.drop-icon').style.display = 'none';
+                dropZone.querySelector('.drop-text').style.display = 'none';
+                dropZone.querySelector('.drop-subtext').style.display = 'none';
+            } catch (err) {
+                console.error("Error al cargar imagen en el estudio:", err);
+                alert("No se pudo cargar la imagen: " + err.message);
+                dropZone.classList.remove('uploading');
+                dropZone.querySelector('.drop-text').textContent = 'Arrastra una imagen aquí o haz clic para cargar';
+            }
+        }
+
+        // Generar Video
+        const studioGenerateBtn = document.getElementById('studio-generate-btn');
+        const studioEmptyPreview = document.getElementById('studio-empty-preview');
+        const studioProgressContainer = document.getElementById('studio-progress-container');
+        const studioProgressBar = document.getElementById('studio-progress-bar');
+        const studioProgressPercentage = document.getElementById('studio-progress-percentage');
+        const studioPlayerContainer = document.getElementById('studio-player-container');
+        const studioVideoPlayer = document.getElementById('studio-video-player');
+        const studioDownloadBtn = document.getElementById('studio-download-btn');
+        const studioOnedriveBtn = document.getElementById('studio-onedrive-btn');
+
+        let activeVideoFilename = null;
+
+        studioGenerateBtn.addEventListener('click', async () => {
+            const promptText = document.getElementById('studio-prompt-input').value.trim();
+            if (!promptText) {
+                alert("Por favor, describe qué quieres que aparezca en el video (Prompt).");
+                return;
+            }
+
+            // Ocultar previsualización vacía o reproductor y mostrar barra de progreso
+            studioEmptyPreview.style.display = 'none';
+            studioPlayerContainer.style.display = 'none';
+            studioProgressContainer.style.display = 'block';
+            studioGenerateBtn.disabled = true;
+            studioGenerateBtn.style.opacity = '0.5';
+            studioGenerateBtn.querySelector('span').textContent = 'Generando en tu Servidor...';
+
+            // Reiniciar pasos e indicador de carga
+            studioProgressBar.style.width = '0%';
+            studioProgressPercentage.textContent = '0%';
+            resetStepsLogs();
+
+            // Simular pasos de carga de barra de progreso con timings realistas
+            let progress = 0;
+            const progressInterval = setInterval(() => {
+                if (progress < 90) {
+                    progress += Math.floor(Math.random() * 3) + 1;
+                    if (progress > 90) progress = 90;
+                    studioProgressBar.style.width = `${progress}%`;
+                    studioProgressPercentage.textContent = `${progress}%`;
+
+                    // Iluminar los pasos secuencialmente según el porcentaje simulado
+                    if (progress > 20) {
+                        markStepActive('step-images');
+                    }
+                    if (progress > 55 && selectedMode === 'narrative') {
+                        markStepActive('step-audio');
+                    }
+                    if (progress > 75) {
+                        markStepActive('step-compose');
+                    }
+                }
+            }, 800);
+
+            try {
+                markStepActive('step-script');
+                
+                const response = await fetch('/api/video', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        prompt: promptText,
+                        duration: selectedDuration,
+                        mode: selectedMode,
+                        style: selectedStyle,
+                        image_url: studioImageUrl
+                    })
+                });
+
+                const data = await response.json();
+                clearInterval(progressInterval);
+
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+
+                // Generación exitosa! Completar barra a 100%
+                studioProgressBar.style.width = '100%';
+                studioProgressPercentage.textContent = '100%';
+                markStepDone('step-script');
+                markStepDone('step-images');
+                if (selectedMode === 'narrative') markStepDone('step-audio');
+                markStepDone('step-compose');
+
+                setTimeout(() => {
+                    studioProgressContainer.style.display = 'none';
+                    studioPlayerContainer.style.display = 'block';
+                    
+                    // Cargar el video en el reproductor
+                    studioVideoPlayer.src = data.url;
+                    studioDownloadBtn.href = data.url;
+                    
+                    activeVideoFilename = data.file;
+                    
+                    studioVideoPlayer.load();
+                    studioVideoPlayer.play();
+                }, 1000);
+
+            } catch (err) {
+                clearInterval(progressInterval);
+                console.error("Error al generar el video en el estudio:", err);
+                alert("Error de generación: " + err.message);
+                
+                studioProgressContainer.style.display = 'none';
+                studioEmptyPreview.style.display = 'flex';
+            } finally {
+                studioGenerateBtn.disabled = false;
+                studioGenerateBtn.style.opacity = '';
+                studioGenerateBtn.querySelector('span').textContent = 'Generar Video Premium';
+            }
+        });
+
+        // Configurar sincronización OneDrive para el video generado
+        studioOnedriveBtn.addEventListener('click', async () => {
+            if (!activeVideoFilename) return;
+            
+            studioOnedriveBtn.disabled = true;
+            const originalText = studioOnedriveBtn.textContent;
+            studioOnedriveBtn.textContent = '☁️ Copiando...';
+            
+            try {
+                // Reutilizamos el endpoint general de sync pasando el session actual
+                const resp = await fetch('/api/onedrive/sync', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ session_id: currentSessionId })
+                });
+                const data = await resp.json();
+                if (data.error) throw new Error(data.error);
+                
+                studioOnedriveBtn.textContent = '✅ Guardado';
+                studioOnedriveBtn.style.color = '#34d399';
+                
+                setTimeout(() => {
+                    studioOnedriveBtn.textContent = originalText;
+                    studioOnedriveBtn.style.color = '';
+                    studioOnedriveBtn.disabled = false;
+                }, 3000);
+            } catch (e) {
+                console.error("Error en sync de video a OneDrive:", e);
+                alert("No se pudo respaldar: " + e.message);
+                studioOnedriveBtn.textContent = '❌ Error';
+                studioOnedriveBtn.style.color = '#f87171';
+                
+                setTimeout(() => {
+                    studioOnedriveBtn.textContent = originalText;
+                    studioOnedriveBtn.style.color = '';
+                    studioOnedriveBtn.disabled = false;
+                }, 3000);
+            }
+        });
+
+        // Helpers de progreso visual
+        function resetStepsLogs() {
+            const steps = document.querySelectorAll('.step-log-item');
+            steps.forEach(s => {
+                s.classList.remove('active', 'done');
+            });
+        }
+
+        function markStepActive(id) {
+            const step = document.getElementById(id);
+            if (step) {
+                step.classList.add('active');
+            }
+        }
+
+        function markStepDone(id) {
+            const step = document.getElementById(id);
+            if (step) {
+                step.classList.add('done');
+            }
+        }
+
+        // ===================== CONTROL DE PESTAÑAS DE LA BARRA LATERAL DERECHA =====================
+        const tabHistoryBtn = document.getElementById('tab-history-btn');
+        const tabMediaBtn = document.getElementById('tab-media-btn');
+        const tabMarketingBtn = document.getElementById('tab-marketing-btn');
+        const tabHistoryContent = document.getElementById('tab-history-content');
+        const tabMediaContent = document.getElementById('tab-media-content');
+        const tabMarketingContent = document.getElementById('tab-marketing-content');
+        const sidebarRightTitle = document.getElementById('sidebar-right-title');
+
+        // Subpestañas de Herramientas
+        const subtabMediaBtn = document.getElementById('subtab-media-btn');
+        const subtabSkillsBtn = document.getElementById('subtab-skills-btn');
+        const subtabMediaContent = document.getElementById('subtab-media-content');
+        const subtabSkillsContent = document.getElementById('subtab-skills-content');
+
+        function setActiveSidebarTab(btnToActivate, contentToActivate, titleText) {
+            [tabHistoryBtn, tabMediaBtn, tabMarketingBtn].forEach(b => {
+                if(b) {
+                    b.classList.remove('active');
+                    b.style.borderBottomColor = 'transparent';
+                    b.style.color = 'var(--text-muted)';
+                }
+            });
+            if (btnToActivate) {
+                btnToActivate.classList.add('active');
+                btnToActivate.style.borderBottomColor = 'var(--color-primary)';
+                btnToActivate.style.color = '#fff';
+            }
+
+            [tabHistoryContent, tabMediaContent, tabMarketingContent].forEach(c => {
+                if(c) c.style.display = 'none';
+            });
+            if (contentToActivate) {
+                contentToActivate.style.display = 'flex';
+            }
+
+            if (sidebarRightTitle) sidebarRightTitle.textContent = titleText;
+        }
+
+        if (tabHistoryBtn) tabHistoryBtn.addEventListener('click', () => setActiveSidebarTab(tabHistoryBtn, tabHistoryContent, "Historial de Chat"));
+        
+        if (tabMediaBtn) {
+            tabMediaBtn.addEventListener('click', () => {
+                setActiveSidebarTab(tabMediaBtn, tabMediaContent, "Galería Multimedia");
+                // Determinar qué subpestaña está activa y cargar correspondientemente
+                if (subtabSkillsBtn && subtabSkillsBtn.classList.contains('active')) {
+                    if(subtabSkillsContent) subtabSkillsContent.style.display = 'flex';
+                    if(subtabMediaContent) subtabMediaContent.style.display = 'none';
+                    if(sidebarRightTitle) sidebarRightTitle.textContent = "Habilidades Core";
+                    if (typeof loadSkills === 'function') loadSkills();
+                } else {
+                    if(subtabMediaContent) subtabMediaContent.style.display = 'flex';
+                    if(subtabSkillsContent) subtabSkillsContent.style.display = 'none';
+                    if(sidebarRightTitle) sidebarRightTitle.textContent = "Galería Multimedia";
+                    if (typeof loadMediaFiles === 'function') loadMediaFiles();
+                }
+            });
+        }
+
+        if (tabMarketingBtn) tabMarketingBtn.addEventListener('click', () => setActiveSidebarTab(tabMarketingBtn, tabMarketingContent, "CRM & Marketing Autónomo"));
+
+        if (subtabMediaBtn && subtabSkillsBtn && subtabMediaContent && subtabSkillsContent) {
+            subtabMediaBtn.addEventListener('click', () => {
+                subtabMediaBtn.classList.add('active');
+                subtabSkillsBtn.classList.remove('active');
+                subtabMediaContent.style.display = 'flex';
+                subtabSkillsContent.style.display = 'none';
+                if (sidebarRightTitle) sidebarRightTitle.textContent = "Galería Multimedia";
+                loadMediaFiles();
+            });
+
+            subtabSkillsBtn.addEventListener('click', () => {
+                subtabSkillsBtn.classList.add('active');
+                subtabMediaBtn.classList.remove('active');
+                subtabSkillsContent.style.display = 'flex';
+                subtabMediaContent.style.display = 'none';
+                if (sidebarRightTitle) sidebarRightTitle.textContent = "Habilidades Core";
+                loadSkills();
+            });
+        }
+
+        // Cargar habilidades dinámicamente desde backend
+        async function loadSkills() {
+            const skillsList = document.getElementById('skills-list');
+            if (!skillsList) return;
+            
+            skillsList.innerHTML = '<span style="font-size:0.85rem; color:var(--text-muted); text-align:center; padding: 20px;">Cargando habilidades core...</span>';
+            
+            try {
+                const resp = await fetch('/api/skills/list');
+                const data = await resp.json();
+                
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+                
+                skillsList.innerHTML = '';
+                
+                if (!data.skills || data.skills.length === 0) {
+                    skillsList.innerHTML = `
+                        <div style="text-align:center; padding:30px 10px;">
+                            <span style="font-size:2rem; filter:grayscale(0.3);">⚡</span>
+                            <p style="font-size:0.8rem; color:var(--text-muted); margin:8px 0 0;">No se han encontrado habilidades locales.</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                data.skills.forEach(skill => {
+                    const card = document.createElement('div');
+                    card.className = 'skill-card';
+                    
+                    const sizeKb = (skill.size / 1024).toFixed(1);
+                    
+                    let functionsHtml = '';
+                    if (skill.functions && skill.functions.length > 0) {
+                        functionsHtml = `
+                            <div class="skill-functions-title">📦 Funciones Disponibles:</div>
+                            <div class="skill-functions-list">
+                                ${skill.functions.map(f => `<span class="skill-function-badge" title="${f.description}">${f.name}()</span>`).join('')}
+                            </div>
+                        `;
+                    }
+                    
+                    card.innerHTML = `
+                        <div class="skill-header">
+                            <div class="skill-title-wrapper">
+                                <span class="skill-icon">⚙️</span>
+                                <span class="skill-title">${skill.name}</span>
+                            </div>
+                            <span class="skill-size">${sizeKb} KB</span>
+                        </div>
+                        <p class="skill-desc">${skill.description}</p>
+                        ${functionsHtml}
+                    `;
+                    
+                    skillsList.appendChild(card);
+                });
+            } catch (err) {
+                console.error("Error al cargar habilidades:", err);
+                skillsList.innerHTML = `<span style="font-size:0.85rem; color:#f87171; text-align:center; padding: 20px;">Error: ${err.message}</span>`;
+            }
+        }
+
+        // Lógica de formulario interactivo de nuevas habilidades
+        const addSkillBtn = document.getElementById('add-skill-btn');
+        const addSkillFormContainer = document.getElementById('add-skill-form-container');
+        const newSkillSubmitBtn = document.getElementById('new-skill-submit-btn');
+        const searchConsole = document.getElementById('search-console');
+        const developSkillBoxContainer = document.getElementById('develop-skill-box-container');
+        const searchResultError = document.getElementById('search-result-error');
+        const confirmDevelopBtn = document.getElementById('confirm-develop-btn');
+        
+        if (addSkillBtn && addSkillFormContainer) {
+            addSkillBtn.addEventListener('click', () => {
+                const isFormVisible = addSkillFormContainer.style.display === 'flex';
+                if (isFormVisible) {
+                    addSkillFormContainer.style.display = 'none';
+                    addSkillBtn.querySelector('.add-skill-trigger').style.transform = 'rotate(0deg)';
+                } else {
+                    addSkillFormContainer.style.display = 'flex';
+                    addSkillBtn.querySelector('.add-skill-trigger').style.transform = 'rotate(45deg)';
+                }
+            });
+        }
+        
+        if (newSkillSubmitBtn) {
+            newSkillSubmitBtn.addEventListener('click', async () => {
+                const skillName = document.getElementById('new-skill-name').value.trim();
+                const skillDesc = document.getElementById('new-skill-desc').value.trim();
+                
+                if (!skillName) {
+                    alert("Por favor introduce el nombre de la habilidad.");
+                    return;
+                }
+                
+                // Deshabilitar botón durante la búsqueda simulada
+                newSkillSubmitBtn.disabled = true;
+                newSkillSubmitBtn.textContent = "Buscando...";
+                
+                // Resetear consola y contenedores
+                searchConsole.innerHTML = '';
+                searchConsole.style.display = 'flex';
+                developSkillBoxContainer.style.display = 'none';
+                
+                // Consola interactiva de búsqueda
+                const logs = [
+                    `🔎 [TERMINAL] Escaneando core local de Mónica en búsqueda de "${skillName}"...`,
+                    `🔎 [SISTEMA] Leyendo lista de módulos en C:\\Users\\jcabr\\Monica_Core\\core\\skills...`,
+                    `🔎 [PYPI] Conectando con el índice de paquetes PyPI de Python...`,
+                    `🔎 [PYPI] Buscando réplicas libres de "${skillName.toLowerCase().replace(/\s+/g, '_')}"...`,
+                    `🔎 [GITHUB] Rastreando repositorios con licencia libre (MIT/Apache/GPL)...`,
+                    `🔎 [WEB] Analizando código de código abierto e integraciones autónomas...`,
+                    `⚠️ [SISTEMA] No se encontró ninguna réplica libre y gratis lista para importar sin desarrollo.`,
+                    `❌ [SISTEMA] Habilidad "${skillName}" no disponible actualmente en tu disco duro.`
+                ];
+                
+                for (let i = 0; i < logs.length; i++) {
+                    const line = document.createElement('div');
+                    line.textContent = logs[i];
+                    if (logs[i].includes('❌')) {
+                        line.style.color = '#ef4444';
+                    } else if (logs[i].includes('⚠️')) {
+                        line.style.color = '#f59e0b';
+                    } else {
+                        line.style.color = '#38bdf8';
+                    }
+                    searchConsole.appendChild(line);
+                    searchConsole.scrollTop = searchConsole.scrollHeight;
+                    // Retraso de tipeo simulado para que se sienta dinámico e interactivo
+                    await new Promise(r => setTimeout(r, 600));
+                }
+                
+                // Mostrar caja de autoprogramación agéntica
+                searchResultError.textContent = `No he encontrado una réplica libre y gratis de "${skillName}" en la web.`;
+                developSkillBoxContainer.style.display = 'flex';
+                
+                newSkillSubmitBtn.disabled = false;
+                newSkillSubmitBtn.textContent = "🔍 Buscar Habilidad";
+            });
+        }
+        
+        if (confirmDevelopBtn) {
+            confirmDevelopBtn.addEventListener('click', () => {
+                const skillName = document.getElementById('new-skill-name').value.trim();
+                const skillDesc = document.getElementById('new-skill-desc').value.trim();
+                
+                // Generar un nombre de archivo sugerido a partir de la habilidad
+                const suggestedFile = skillName.toLowerCase()
+                    .normalize("NFD")
+                    .replace(/[\u0300-\u036f]/g, "") // remover acentos
+                    .replace(/[^a-z0-9]+/g, '_') // caracteres especiales a guión bajo
+                    .replace(/^_+|_+$/g, ''); // recortar guiones
+                    
+                const suggestedFilename = suggestedFile || "nueva_habilidad";
+                
+                // Cerrar formulario y consola
+                addSkillFormContainer.style.display = 'none';
+                addSkillBtn.querySelector('.add-skill-trigger').style.transform = 'rotate(0deg)';
+                searchConsole.style.display = 'none';
+                developSkillBoxContainer.style.display = 'none';
+                
+                // Resetear campos
+                document.getElementById('new-skill-name').value = '';
+                document.getElementById('new-skill-desc').value = '';
+                
+                // Abrir pestaña de chat e historial
+                tabHistoryBtn.click();
+                
+                // Generar prompt estructurado para que Mónica use su bucle ReAct
+                const promptText = `[SISTEMA HABILIDADES] Desarrollar e integrar una nueva habilidad local.
+
+Habilidad solicitada: "${skillName}"
+Descripción de la capacidad: "${skillDesc || 'Sin descripción adicional.'}"
+Archivo sugerido de destino: "core/skills/${suggestedFilename}.py"
+
+Por favor:
+1. Investiga en internet o repositorios si hay librerías o dependencias necesarias e instálalas usando la etiqueta XML <run_command> (usa pip venv\\Scripts\\pip.exe install).
+2. Programa e implementa el código de alta fidelidad escribiendo el script Python en "core/skills/${suggestedFilename}.py" usando la etiqueta XML <write_file>.
+3. El archivo debe contener funciones descriptivas con docstrings descriptivos claros para que mi panel de Habilidades pueda listarlos.
+4. Una vez guardado e instalado, escribe un mensaje confirmando la instalación de la habilidad.`;
+                
+                const chatInput = document.getElementById('chat-input');
+                if (chatInput) {
+                    chatInput.value = promptText;
+                    chatInput.focus();
+                    
+                    // Auto-enviar
+                    const chatForm = document.getElementById('chat-form');
+                    if (chatForm) {
+                        chatForm.dispatchEvent(new Event('submit'));
+                    }
+                }
+            });
+        }
+
+        async function loadMediaFiles() {
+            const mediaList = document.getElementById('media-list');
+            if (!mediaList) return;
+            
+            mediaList.innerHTML = '<span style="font-size:0.85rem; color:var(--text-muted); text-align:center; padding: 20px;">Cargando archivos multimedia...</span>';
+            
+            try {
+                const resp = await fetch('/api/media/list');
+                const data = await resp.json();
+                
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+                
+                mediaList.innerHTML = '';
+                
+                if (!data.media || data.media.length === 0) {
+                    mediaList.innerHTML = `
+                        <div style="text-align:center; padding:40px 10px; display:flex; flex-direction:column; gap:12px; align-items:center;">
+                            <span style="font-size:2.5rem; filter:grayscale(0.3);">📁</span>
+                            <p style="font-size:0.85rem; color:var(--text-muted); margin:0; font-weight:500;">No se han encontrado archivos multimedia en tu disco local.</p>
+                            <p style="font-size:0.75rem; color:var(--text-dark); margin:0;">Pídele a Mónica que te genere imágenes o videos para verlos aquí.</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                data.media.forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'media-card';
+                    
+                    const dateStr = new Date(item.created_at * 1000).toLocaleDateString('es-ES', {day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit'});
+                    const sizeMb = (item.size / (1024 * 1024)).toFixed(2);
+                    
+                    let previewHtml = '';
+                    let iconOverlay = '';
+                    
+                    if (item.type === 'images' || item.type === 'uploads' && (item.name.endsWith('.png') || item.name.endsWith('.jpg') || item.name.endsWith('.jpeg') || item.name.endsWith('.gif'))) {
+                        previewHtml = `<img src="${item.url}" class="media-preview-img" alt="${item.name}" loading="lazy" />`;
+                        iconOverlay = `<span class="media-icon-overlay">🖼️</span>`;
+                    } else if (item.type === 'video' || item.name.endsWith('.mp4')) {
+                        previewHtml = `<video src="${item.url}" class="media-preview-img" style="object-fit:cover;" muted playsinline></video>`;
+                        iconOverlay = `<span class="media-icon-overlay">🎬</span>`;
+                    } else if (item.type === 'audio') {
+                        previewHtml = `<div style="display:flex; align-items:center; justify-content:center; width:100%; height:100%; font-size:2.5rem;">🔊</div>`;
+                        iconOverlay = `<span class="media-icon-overlay">🎵</span>`;
+                    } else {
+                        previewHtml = `<div style="display:flex; align-items:center; justify-content:center; width:100%; height:100%; font-size:2.5rem;">📄</div>`;
+                        iconOverlay = `<span class="media-icon-overlay">📁</span>`;
+                    }
+                    
+                    card.innerHTML = `
+                        <span class="media-badge">${item.type}</span>
+                        <button class="media-delete-btn" title="Eliminar archivo permanentemente">&times;</button>
+                        <div class="media-preview-container">
+                            ${previewHtml}
+                            ${iconOverlay}
+                        </div>
+                        <div class="media-info">
+                            <span class="media-title" title="${item.name}">${item.name}</span>
+                            <div class="media-meta">
+                                <span>${sizeMb} MB</span>
+                                <span>${dateStr}</span>
+                            </div>
+                        </div>
+                    `;
+                    
+                    // Abrir archivo multimedia en nueva pestaña al hacer clic
+                    card.querySelector('.media-preview-container').onclick = () => {
+                        window.open(item.url, '_blank');
+                    };
+                    
+                    // Borrar archivo físicamente
+                    card.querySelector('.media-delete-btn').onclick = async (e) => {
+                        e.stopPropagation();
+                        if (!confirm(`¿Estás seguro de que deseas eliminar permanentemente el archivo "${item.name}" de tu disco y de OneDrive?`)) return;
+                        
+                        try {
+                            const delResp = await fetch('/api/media/delete', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ url: item.url })
+                            });
+                            const delData = await delResp.json();
+                            if (delData.error) throw new Error(delData.error);
+                            
+                            card.style.transform = 'scale(0.9)';
+                            card.style.opacity = '0';
+                            setTimeout(() => {
+                                card.remove();
+                                loadMediaFiles();
+                            }, 250);
+                        } catch (err) {
+                            alert("No se pudo eliminar el archivo: " + err.message);
+                        }
+                    };
+                    
+                    mediaList.appendChild(card);
+                });
+            } catch (err) {
+                console.error("Error al cargar archivos multimedia:", err);
+                mediaList.innerHTML = `<span style="font-size:0.85rem; color:#f87171; text-align:center; padding: 20px;">Error al cargar galería: ${err.message}</span>`;
+            }
+        }
+
+        // ===================== ONEDRIVE SYNC & BOTTOM NAV LOGIC =====================
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'hidden') {
+                if (typeof currentSessionId !== 'undefined' && currentSessionId) {
+                    const blob = new Blob([JSON.stringify({ session_id: currentSessionId })], { type: 'application/json' });
+                    navigator.sendBeacon('/api/onedrive/sync', blob);
+                }
+            }
+        });
+
+        // ===================== BOTTOM NAVIGATION EVENT LISTENERS =====================
+        document.addEventListener('DOMContentLoaded', () => {
+            const navBtnChats = document.getElementById('nav-btn-chats');
+            const navBtnMedia = document.getElementById('nav-btn-media');
+            const navBtnNew = document.getElementById('nav-btn-new');
+            const navBtnClear = document.getElementById('nav-btn-clear');
+            
+            const allNavBtns = document.querySelectorAll('.bottom-nav-btn');
+            
+            function setActiveNav(btn) {
+                allNavBtns.forEach(b => b.classList.remove('active'));
+                if (btn) btn.classList.add('active');
+            }
+
+            if (navBtnChats) {
+                navBtnChats.addEventListener('click', () => {
+                    const historyBtn = document.getElementById('tab-history-btn');
+                    if (historyBtn) historyBtn.click();
+                    
+                    if (typeof openDrawer === 'function') openDrawer();
+                    setActiveNav(navBtnChats);
+                });
+            }
+
+            if (navBtnMedia) {
+                navBtnMedia.addEventListener('click', () => {
+                    const mediaBtn = document.getElementById('tab-media-btn');
+                    const subMediaBtn = document.getElementById('subtab-media-btn');
+                    
+                    if (mediaBtn) mediaBtn.click();
+                    if (subMediaBtn) subMediaBtn.click();
+                    
+                    if (typeof openDrawer === 'function') openDrawer();
+                    setActiveNav(navBtnMedia);
+                });
+            }
+
+            const navBtnMarketing = document.getElementById('nav-btn-marketing');
+            if (navBtnMarketing) {
+                navBtnMarketing.addEventListener('click', () => {
+                    if (typeof abrirMarketingDashboard === 'function') {
+                        abrirMarketingDashboard();
+                    }
+                    setActiveNav(navBtnMarketing);
+                });
+            }
+
+            if (navBtnNew) {
+                navBtnNew.addEventListener('click', () => {
+                    const newChatBtn = document.getElementById('new-chat-btn');
+                    if (newChatBtn) newChatBtn.click();
+                    setActiveNav(navBtnNew);
+                });
+            }
+
+            if (navBtnClear) {
+                navBtnClear.addEventListener('click', () => {
+                    const clearBtn = document.getElementById('clear-chat-btn');
+                    if (clearBtn) clearBtn.click();
+                });
+            }
+        });
+    </script>
+    <!-- BÚNKER DE APIS MODAL -->
+    <div id="modal-api-bunker" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); backdrop-filter:blur(15px); -webkit-backdrop-filter:blur(15px); z-index:9999; justify-content:center; align-items:center;">
+        <div style="background:rgba(12, 4, 28, 0.85); border:1px solid rgba(0, 240, 255, 0.4); border-radius:16px; width:90%; max-width:500px; padding:24px; box-shadow:0 0 40px rgba(0, 240, 255, 0.15); color:white;">
+            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:12px; margin-bottom:16px;">
+                <h2 style="margin:0; font-size:1.4rem; color:var(--color-primary);">🔑 Búnker de APIs</h2>
+                <button id="close-bunker-btn" style="background:transparent; border:none; color:white; font-size:1.5rem; cursor:pointer;">&times;</button>
+            </div>
+            
+            <div id="api-keys-list" style="max-height:250px; overflow-y:auto; display:flex; flex-direction:column; gap:8px; margin-bottom:20px;">
+            </div>
+
+            <form id="add-api-form" style="display:flex; flex-direction:column; gap:12px; background:rgba(0,0,0,0.4); padding:16px; border-radius:12px; border:1px solid rgba(255,255,255,0.05);">
+                <h4 style="margin:0; color:var(--text-muted);">Añadir Nuevo Puente</h4>
+                <input type="text" id="api-name-input" placeholder="Nombre de la App (Ej. OpenAI, Luma)" required style="padding:10px; border-radius:8px; border:1px solid rgba(255,255,255,0.2); background:transparent; color:white;">
+                <div style="display:flex; gap:8px; position:relative;">
+                    <input type="password" id="api-key-input" placeholder="Ingresa la llave (sk-...)" required style="flex:1; padding:10px; border-radius:8px; border:1px solid rgba(255,255,255,0.2); background:transparent; color:white; padding-right:40px;">
+                    <button type="button" id="toggle-key-visibility" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); background:none; border:none; color:white; cursor:pointer;">👁️</button>
+                </div>
+                <button type="button" id="scan-qr-btn" style="padding:10px; border-radius:8px; border:1px solid rgba(0, 240, 255, 0.4); background:rgba(0, 240, 255, 0.1); color:var(--color-primary); cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px;">
+                    📷 Escanear QR (WhatsApp/Evolution)
+                </button>
+                <div id="qr-video-container" style="display:none; flex-direction:column; align-items:center; margin-top:10px; border:1px solid #00f0ff; border-radius:8px; overflow:hidden;">
+                    <video id="qr-video" style="width:100%; max-height:200px; background:black;" autoplay playsinline></video>
+                    <button type="button" id="stop-qr-btn" style="width:100%; padding:8px; background:rgba(255,0,0,0.2); border:none; color:#f87171; cursor:pointer; font-weight:bold;">Detener Cámara</button>
+                </div>
+                <button type="submit" style="padding:10px; border-radius:8px; border:none; background:var(--color-gradient); color:white; font-weight:bold; cursor:pointer; margin-top:4px;">Guardar en el Búnker</button>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        // LOGICA DEL BÚNKER DE APIS Y CAMARA QR
+        document.addEventListener('DOMContentLoaded', () => {
+            const btnBunker1 = document.getElementById('api-bunker-btn');
+            const btnBunker2 = document.getElementById('header-api-bunker-btn');
+            const modalBunker = document.getElementById('modal-api-bunker');
+            const closeBunker = document.getElementById('close-bunker-btn');
+            const addApiForm = document.getElementById('add-api-form');
+            const apiKeysList = document.getElementById('api-keys-list');
+            const toggleKeyVis = document.getElementById('toggle-key-visibility');
+            const apiKeyInput = document.getElementById('api-key-input');
+            const scanQrBtn = document.getElementById('scan-qr-btn');
+            const stopQrBtn = document.getElementById('stop-qr-btn');
+            const qrVideoContainer = document.getElementById('qr-video-container');
+            const qrVideo = document.getElementById('qr-video');
+            let qrStream = null;
+
+            if (scanQrBtn) {
+                scanQrBtn.addEventListener('click', async () => {
+                    try {
+                        qrStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+                        qrVideo.srcObject = qrStream;
+                        qrVideoContainer.style.display = 'flex';
+                        scanQrBtn.style.display = 'none';
+                        // Aquí iría la lógica de jsQR o libreria QR para escanear frame por frame.
+                        // Simulamos que encuentra un QR a los 3 segundos
+                        setTimeout(() => {
+                            if(qrStream) {
+                                apiKeyInput.value = "EVO-QR-SCANNED-TOKEN-123";
+                                stopQrBtn.click();
+                            }
+                        }, 3000);
+                    } catch (err) {
+                        alert("Error accediendo a la cámara: " + err);
+                    }
+                });
+            }
+
+            if (stopQrBtn) {
+                stopQrBtn.addEventListener('click', () => {
+                    if (qrStream) {
+                        qrStream.getTracks().forEach(track => track.stop());
+                        qrStream = null;
+                    }
+                    qrVideoContainer.style.display = 'none';
+                    scanQrBtn.style.display = 'flex';
+                });
+            }
+
+            async function loadApiKeys() {
+                apiKeysList.innerHTML = '<div style="text-align:center; color:var(--text-muted); padding:10px;">Cargando...</div>';
+                try {
+                    const res = await fetch('/api/keys');
+                    const data = await res.json();
+                    apiKeysList.innerHTML = '';
+                    if(!data.keys || data.keys.length === 0) {
+                        apiKeysList.innerHTML = '<div style="text-align:center; color:var(--text-muted); padding:10px;">No hay llaves guardadas aún.</div>';
+                        return;
+                    }
+                    data.keys.forEach(k => {
+                        const item = document.createElement('div');
+                        item.style = "display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.05); padding:10px 14px; border-radius:8px; border:1px solid rgba(255,255,255,0.05);";
+                        item.innerHTML = `
+                            <div style="display:flex; flex-direction:column;">
+                                <strong style="color:var(--text-main);">${k.service}</strong>
+                                <span style="color:var(--text-muted); font-size:0.8rem; font-family:monospace;">${k.key.substring(0,6)}••••••••</span>
+                            </div>
+                            <button class="delete-key-btn" data-service="${k.service}" style="background:rgba(239,68,68,0.2); color:#fca5a5; border:1px solid rgba(239,68,68,0.3); border-radius:6px; padding:6px 10px; cursor:pointer; font-size:0.85rem;">🗑️</button>
+                        `;
+                        apiKeysList.appendChild(item);
+                    });
+
+                    document.querySelectorAll('.delete-key-btn').forEach(btn => {
+                        btn.addEventListener('click', async (e) => {
+                            const srv = e.target.getAttribute('data-service');
+                            await fetch('/api/keys/' + srv, {method:'DELETE'});
+                            loadApiKeys();
+                        });
+                    });
+                } catch (err) {
+                    apiKeysList.innerHTML = '<div style="color:#ef4444; padding:10px; text-align:center;">Error de red.</div>';
+                }
+            }
+
+            const openBunker = () => {
+                modalBunker.style.display = 'flex';
+                loadApiKeys();
+            };
+
+            if(btnBunker1) btnBunker1.addEventListener('click', openBunker);
+            if(btnBunker2) btnBunker2.addEventListener('click', openBunker);
+            if(closeBunker) closeBunker.addEventListener('click', () => modalBunker.style.display = 'none');
+
+            if(toggleKeyVis && apiKeyInput) {
+                toggleKeyVis.addEventListener('click', () => {
+                    if(apiKeyInput.type === 'password') {
+                        apiKeyInput.type = 'text';
+                        toggleKeyVis.textContent = '🙈';
+                    } else {
+                        apiKeyInput.type = 'password';
+                        toggleKeyVis.textContent = '👁️';
+                    }
+                });
+            }
+
+            if(addApiForm) {
+                addApiForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const sname = document.getElementById('api-name-input').value.trim();
+                    const kvalue = apiKeyInput.value.trim();
+                    if(!sname || !kvalue) return;
+
+                    const res = await fetch('/api/keys', {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({service_name: sname, key_value: kvalue})
+                    });
+                    
+                    if(res.ok) {
+                        addApiForm.reset();
+                        apiKeyInput.type = 'password';
+                        toggleKeyVis.textContent = '👁️';
+                        loadApiKeys();
+                    }
+                });
+            }
+        });
+    </script>
+    <!-- Panel Deslizante de Marketing -->
+    {% include 'marketing.html' %}
+    <!-- Script de Llamada Activa Real -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const micBtn = document.getElementById('mic-btn');
+            const activeCallUI = document.getElementById('active-call-ui');
+            const endCallBtn = document.getElementById('end-call-btn');
+            const callTranscription = document.getElementById('call-transcription');
+            const chatInput = document.getElementById('chat-input');
+
+            // Configuración de SpeechRecognition
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            let recognition = null;
+            let isCallActive = false;
+            let silenceTimer = null;
+            let currentTranscript = "";
+
+            // Configuración de SpeechSynthesis (Voz de Mónica)
+            const synth = window.speechSynthesis;
+
+            if (SpeechRecognition) {
+                recognition = new SpeechRecognition();
+                recognition.continuous = true;
+                recognition.interimResults = true;
+                recognition.lang = 'es-ES';
+
+                recognition.onstart = () => {
+                    callTranscription.innerText = "Te escucho...";
+                    callTranscription.style.color = "#00f0ff";
+                };
+
+                recognition.onresult = (event) => {
+                    let interimTranscript = '';
+                    let finalTranscript = '';
+
+                    for (let i = event.resultIndex; i < event.results.length; ++i) {
+                        if (event.results[i].isFinal) {
+                            finalTranscript += event.results[i][0].transcript;
+                        } else {
+                            interimTranscript += event.results[i][0].transcript;
+                        }
+                    }
+
+                    const currentFullTranscript = finalTranscript || interimTranscript;
+                    if (currentFullTranscript.trim().length > 0) {
+                        callTranscription.innerText = currentFullTranscript;
+                        currentTranscript = currentFullTranscript;
+                        
+                        // Reiniciar el temporizador de silencio cada vez que el usuario habla
+                        clearTimeout(silenceTimer);
+                        silenceTimer = setTimeout(() => {
+                            procesarPeticion(currentTranscript);
+                        }, 1500); // 1.5 segundos de pausa activa
+                    }
+                };
+
+                recognition.onerror = (event) => {
+                    console.error("Error de reconocimiento de voz: ", event.error);
+                    if (event.error === 'not-allowed') {
+                        alert("Por favor habilita los permisos de micrófono en tu navegador.");
+                        detenerLlamada();
+                    }
+                };
+
+                recognition.onend = () => {
+                    // Si la llamada sigue activa pero el reconocimiento se detuvo (ej. por inactividad nativa), reiniciarlo.
+                    // A menos que Mónica esté hablando.
+                    if (isCallActive && !synth.speaking) {
+                        try {
+                            recognition.start();
+                        } catch(e) {}
+                    }
+                };
+            }
+
+            function procesarPeticion(texto) {
+                if (!texto.trim() || !isCallActive) return;
+                
+                // Detener escucha temporalmente para no escuchar su propia voz
+                recognition.stop();
+                clearTimeout(silenceTimer);
+                callTranscription.innerText = "Pensando...";
+                callTranscription.style.color = "#facc15"; // Amarillo de proceso
+                currentTranscript = "";
+
+                // Insertar el texto en el input del chat
+                if(chatInput) {
+                    chatInput.value = texto;
+                }
+
+                // Simular envío visual en la UI de Mónica
+                const userMsg = texto;
+                agregarMensajeVisual(userMsg, 'user');
+                
+                setTimeout(() => {
+                    // Respuesta simulada de la IA
+                    const aiResponse = "He recibido tu instrucción: " + userMsg + ". Aquí estoy procesándolo en tiempo real.";
+                    agregarMensajeVisual(aiResponse, 'ai');
+                    
+                    // Mónica Habla la respuesta
+                    hablar(aiResponse);
+                }, 800);
+            }
+
+            function agregarMensajeVisual(texto, rol) {
+                const messagesDiv = document.getElementById('messages');
+                if(!messagesDiv) return;
+                const msgEl = document.createElement('div');
+                msgEl.style.padding = "10px";
+                msgEl.style.margin = "10px 0";
+                msgEl.style.borderRadius = "8px";
+                msgEl.style.background = rol === 'user' ? "rgba(0, 240, 255, 0.1)" : "rgba(168, 85, 247, 0.1)";
+                msgEl.style.border = rol === 'user' ? "1px solid rgba(0, 240, 255, 0.3)" : "1px solid rgba(168, 85, 247, 0.3)";
+                msgEl.style.color = "white";
+                msgEl.style.alignSelf = rol === 'user' ? "flex-end" : "flex-start";
+                msgEl.style.maxWidth = "80%";
+                msgEl.innerHTML = (rol === 'user' ? "<strong>Tú:</strong> " : "<strong>Mónica:</strong> ") + texto;
+                messagesDiv.appendChild(msgEl);
+                messagesDiv.scrollTop = messagesDiv.scrollHeight;
+            }
+
+            function hablar(texto) {
+                if (!synth) {
+                    reactivarEscucha();
+                    return;
+                }
+                
+                callTranscription.innerText = "Mónica hablando...";
+                callTranscription.style.color = "#a855f7"; // Morado de IA
+
+                const utterance = new SpeechSynthesisUtterance(texto);
+                utterance.lang = 'es-ES';
+                utterance.rate = 1.0;
+                
+                // Intentar buscar una voz femenina en español si está disponible
+                const voices = synth.getVoices();
+                const femaleVoice = voices.find(v => v.lang.includes('es') && (v.name.includes('Female') || v.name.includes('Mujer') || v.name.includes('Elena') || v.name.includes('Laura')));
+                if (femaleVoice) {
+                    utterance.voice = femaleVoice;
+                }
+
+                utterance.onend = () => {
+                    // Cuando termina de hablar, reactivamos el micrófono automáticamente
+                    reactivarEscucha();
+                };
+
+                synth.speak(utterance);
+            }
+
+            function reactivarEscucha() {
+                if (isCallActive) {
+                    callTranscription.innerText = "Te escucho...";
+                    callTranscription.style.color = "#00f0ff";
+                    if(chatInput) chatInput.value = "";
+                    try {
+                        recognition.start();
+                    } catch(e) {}
+                }
+            }
+
+            function iniciarLlamada() {
+                if (!SpeechRecognition) {
+                    alert("Tu navegador no soporta el reconocimiento de voz (Web Speech API). Usa Chrome, Edge o Safari.");
+                    return;
+                }
+                isCallActive = true;
+                activeCallUI.style.display = 'block';
+                try {
+                    recognition.start();
+                } catch(e) {}
+            }
+
+            function detenerLlamada() {
+                isCallActive = false;
+                clearTimeout(silenceTimer);
+                activeCallUI.style.display = 'none';
+                if(recognition) recognition.stop();
+                if(synth) synth.cancel(); // Detener cualquier habla actual
+            }
+
+            if(micBtn) {
+                const newMicBtn = micBtn.cloneNode(true);
+                micBtn.parentNode.replaceChild(newMicBtn, micBtn);
+                
+                newMicBtn.addEventListener('click', () => {
+                    if (isCallActive) detenerLlamada();
+                    else iniciarLlamada();
+                });
+            }
+
+            if(endCallBtn) endCallBtn.addEventListener('click', detenerLlamada);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,227 @@
+C:\Users\jcabr\Monica_Core\web_app.py:53: DeprecationWarning: 
+        on_event is deprecated, use lifespan event handlers instead.
+
+        Read more about it in the
+        [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+        
+  @app.on_event("startup")
+2026-05-23 08:16:17,924 | DEBUG    | asyncio | Using selector: SelectSelector
+INFO:     Started server process [8112]
+INFO:     Waiting for application startup.
+2026-05-23 08:16:18,012 | DEBUG    | core.storage | Directorio asegurado: C:\Users\jcabr\Monica_Core\logs
+2026-05-23 08:16:18,012 | DEBUG    | core.storage | Directorio asegurado: C:\Users\jcabr\Monica_Core\state
+2026-05-23 08:16:18,013 | DEBUG    | core.storage | Directorio asegurado: C:\Users\jcabr\Monica_Core\state\sessions
+2026-05-23 08:16:18,015 | INFO     | core.storage | Logger inicializado en C:\Users\jcabr\Monica_Core\logs\monica_20260523_081618.log
+2026-05-23 08:16:18,016 | INFO     | core.storage | Sistema de almacenamiento inicializado.
+2026-05-23 08:16:18,016 | INFO     | core.storage | Servidor web de Mónica iniciado.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on https://0.0.0.0:8000 (Press CTRL+C to quit)
+
+[HTTPS] Iniciando Monica en modo HTTPS Seguro:
+ - Servidor disponible en: https://localhost:8000
+INFO:     192.168.1.24:65039 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57501 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65037 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65038 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65039 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65037 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65038 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65037 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65038 - "GET /api/logs HTTP/1.1" 200 OK
+2026-05-23 08:16:28,549 | INFO     | core.storage | Sincronización: Guardado archivo de sesión en OneDrive -> state/sessions/default.json
+2026-05-23 08:16:28,554 | INFO     | core.storage | Sincronización: Detectados 3 archivos multimedia para subir a la nube.
+2026-05-23 08:16:28,564 | INFO     | core.storage | Sincronización: Archivo subido a OneDrive -> media/images/imagen_20260522_223915.png
+2026-05-23 08:16:28,565 | INFO     | core.storage | Sincronización: ¡Proceso completado! 1 archivos multimedia respaldados en la nube con éxito.
+INFO:     192.168.1.24:65037 - "POST /api/onedrive/sync HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65038 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65040 - "GET /api/logs HTTP/1.1" 200 OK
+2026-05-23 08:16:38,836 | INFO     | core.storage | Sincronización: Guardado archivo de sesión en OneDrive -> state/sessions/default.json
+2026-05-23 08:16:38,840 | INFO     | core.storage | Sincronización: Detectados 3 archivos multimedia para subir a la nube.
+2026-05-23 08:16:38,854 | INFO     | core.storage | Sincronización: Archivo subido a OneDrive -> media/images/imagen_20260522_223915.png
+2026-05-23 08:16:38,856 | INFO     | core.storage | Sincronización: ¡Proceso completado! 1 archivos multimedia respaldados en la nube con éxito.
+INFO:     192.168.1.24:65040 - "POST /api/onedrive/sync HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65041 - "GET / HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65041 - "GET /api/chat/history?session_id=default HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65043 - "GET /api/chat/sessions HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65044 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65041 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65043 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65044 - "GET /api/keys HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65041 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65043 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65041 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65043 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65041 - "GET /api/media/list HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65043 - "GET /api/media/list HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65041 - "GET /media/uploads/imagen_20260522_064632.png HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65043 - "GET /media/uploads/IMG_2794.png HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65046 - "GET /media/uploads/IMG_2787.png HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65045 - "GET /media/uploads/IMG_2795.png HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65041 - "GET /media/video/proyecto_20260522_224905/escena_01.png HTTP/1.1" 404 Not Found
+INFO:     192.168.1.24:65041 - "GET /media/video/proyecto_20260522_224905/escena_02.png HTTP/1.1" 404 Not Found
+INFO:     192.168.1.24:65048 - "GET /media/video/proyecto_20260522_224905/video_20260522_224905.mp4 HTTP/1.1" 404 Not Found
+INFO:     192.168.1.24:65047 - "GET /media/video/proyecto_20260522_224905/guion.json HTTP/1.1" 404 Not Found
+INFO:     192.168.1.24:65043 - "GET /media/video/proyecto_20260522_224905/video_20260522_224905.mp4 HTTP/1.1" 404 Not Found
+INFO:     192.168.1.24:65041 - "GET /media/video/proyecto_20260522_224905/escena_02.png HTTP/1.1" 404 Not Found
+INFO:     192.168.1.24:65048 - "GET /media/video/proyecto_20260522_224905/guion.json HTTP/1.1" 404 Not Found
+INFO:     192.168.1.24:65047 - "GET /media/video/proyecto_20260522_224905/escena_01.png HTTP/1.1" 404 Not Found
+INFO:     192.168.1.24:65043 - "GET /media/uploads/IMG_2795.png HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65041 - "GET /media/uploads/IMG_2794.png HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65048 - "GET /media/uploads/IMG_2787.png HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65047 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65045 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65043 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65045 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65043 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65045 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65043 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65045 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65043 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65045 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65043 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57503 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65045 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65043 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65045 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65043 - "GET /api/logs HTTP/1.1" 200 OK
+2026-05-23 08:17:23,333 | INFO     | core.storage | Sincronización: Guardado archivo de sesión en OneDrive -> state/sessions/default.json
+2026-05-23 08:17:23,337 | INFO     | core.storage | Sincronización: Detectados 3 archivos multimedia para subir a la nube.
+2026-05-23 08:17:23,351 | INFO     | core.storage | Sincronización: Archivo subido a OneDrive -> media/images/imagen_20260522_223915.png
+2026-05-23 08:17:23,353 | INFO     | core.storage | Sincronización: ¡Proceso completado! 1 archivos multimedia respaldados en la nube con éxito.
+INFO:     192.168.1.24:65045 - "POST /api/onedrive/sync HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65043 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65049 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65049 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65049 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65049 - "GET /api/media/list HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65050 - "GET /api/media/list HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65049 - "GET /media/video/proyecto_20260522_224905/escena_01.png HTTP/1.1" 404 Not Found
+INFO:     192.168.1.24:65050 - "GET /media/video/proyecto_20260522_224905/escena_02.png HTTP/1.1" 404 Not Found
+INFO:     192.168.1.24:65049 - "GET /media/video/proyecto_20260522_224905/guion.json HTTP/1.1" 404 Not Found
+INFO:     192.168.1.24:65050 - "GET /media/video/proyecto_20260522_224905/escena_01.png HTTP/1.1" 404 Not Found
+INFO:     192.168.1.24:65052 - "GET /media/video/proyecto_20260522_224905/video_20260522_224905.mp4 HTTP/1.1" 404 Not Found
+INFO:     192.168.1.24:65051 - "GET /media/video/proyecto_20260522_224905/guion.json HTTP/1.1" 404 Not Found
+INFO:     192.168.1.24:65053 - "GET /media/video/proyecto_20260522_224905/video_20260522_224905.mp4 HTTP/1.1" 404 Not Found
+INFO:     192.168.1.24:65054 - "GET /media/video/proyecto_20260522_224905/escena_02.png HTTP/1.1" 404 Not Found
+INFO:     192.168.1.24:65049 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65050 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65049 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65050 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57507 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65049 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65050 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65049 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65050 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65049 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65050 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65049 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65050 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65049 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65050 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65049 - "GET /api/logs HTTP/1.1" 200 OK
+2026-05-23 08:18:39,971 | INFO     | core.storage | Sincronización: Guardado archivo de sesión en OneDrive -> state/sessions/default.json
+2026-05-23 08:18:39,975 | INFO     | core.storage | Sincronización: Detectados 3 archivos multimedia para subir a la nube.
+2026-05-23 08:18:39,989 | INFO     | core.storage | Sincronización: Archivo subido a OneDrive -> media/images/imagen_20260522_223915.png
+2026-05-23 08:18:39,991 | INFO     | core.storage | Sincronización: ¡Proceso completado! 1 archivos multimedia respaldados en la nube con éxito.
+INFO:     192.168.1.24:65050 - "POST /api/onedrive/sync HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65049 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65050 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57510 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57512 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57514 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57517 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57520 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57526 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65055 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65055 - "GET /api/logs HTTP/1.1" 200 OK
+2026-05-23 08:24:58,601 | INFO     | core.storage | Sincronización: Guardado archivo de sesión en OneDrive -> state/sessions/default.json
+2026-05-23 08:24:58,609 | INFO     | core.storage | Sincronización: Detectados 3 archivos multimedia para subir a la nube.
+2026-05-23 08:24:58,637 | INFO     | core.storage | Sincronización: Archivo subido a OneDrive -> media/images/imagen_20260522_223915.png
+2026-05-23 08:24:58,642 | INFO     | core.storage | Sincronización: ¡Proceso completado! 1 archivos multimedia respaldados en la nube con éxito.
+INFO:     192.168.1.24:65055 - "POST /api/onedrive/sync HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65056 - "GET / HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65056 - "GET /api/chat/history?session_id=default HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65058 - "GET /api/chat/sessions HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65059 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65056 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65058 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65056 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65058 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65056 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65058 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65056 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57529 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65058 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65056 - "GET /api/chat/history?session_id=default HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65058 - "GET /api/chat/sessions HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65060 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65056 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65058 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65056 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65058 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65056 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65058 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65056 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65058 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65056 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65058 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65056 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65058 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65056 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65058 - "GET /api/logs HTTP/1.1" 200 OK
+2026-05-23 08:25:49,489 | INFO     | core.storage | Sincronización: Guardado archivo de sesión en OneDrive -> state/sessions/default.json
+2026-05-23 08:25:49,495 | INFO     | core.storage | Sincronización: Detectados 3 archivos multimedia para subir a la nube.
+2026-05-23 08:25:49,518 | INFO     | core.storage | Sincronización: Archivo subido a OneDrive -> media/images/imagen_20260522_223915.png
+2026-05-23 08:25:49,522 | INFO     | core.storage | Sincronización: ¡Proceso completado! 1 archivos multimedia respaldados en la nube con éxito.
+INFO:     192.168.1.24:65056 - "POST /api/onedrive/sync HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65058 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65056 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57531 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57533 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65061 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65061 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65061 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65061 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65061 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65061 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65061 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65061 - "GET /api/logs HTTP/1.1" 200 OK
+2026-05-23 08:27:52,668 | INFO     | core.storage | Sincronización: Guardado archivo de sesión en OneDrive -> state/sessions/default.json
+2026-05-23 08:27:52,672 | INFO     | core.storage | Sincronización: Detectados 3 archivos multimedia para subir a la nube.
+2026-05-23 08:27:52,703 | INFO     | core.storage | Sincronización: Archivo subido a OneDrive -> media/images/imagen_20260522_223915.png
+2026-05-23 08:27:52,705 | INFO     | core.storage | Sincronización: ¡Proceso completado! 1 archivos multimedia respaldados en la nube con éxito.
+INFO:     192.168.1.24:65061 - "POST /api/onedrive/sync HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65061 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65061 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57536 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57543 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57545 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57548 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57550 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57552 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57557 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57559 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57562 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57565 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57568 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57575 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57578 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57582 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57584 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57586 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57590 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57595 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57598 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57600 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57602 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65072 - "GET /api/logs HTTP/1.1" 200 OK
+2026-05-23 08:49:15,944 | INFO     | core.storage | Sincronización: Guardado archivo de sesión en OneDrive -> state/sessions/default.json
+2026-05-23 08:49:15,953 | INFO     | core.storage | Sincronización: Detectados 3 archivos multimedia para subir a la nube.
+2026-05-23 08:49:15,977 | INFO     | core.storage | Sincronización: Archivo subido a OneDrive -> media/images/imagen_20260522_223915.png
+2026-05-23 08:49:15,979 | INFO     | core.storage | Sincronización: ¡Proceso completado! 1 archivos multimedia respaldados en la nube con éxito.
+INFO:     192.168.1.24:65072 - "POST /api/onedrive/sync HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65072 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57608 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65072 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57614 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57617 - "GET /api/logs HTTP/1.1" 200 OK

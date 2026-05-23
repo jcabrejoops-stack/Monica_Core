@@ -1,0 +1,16 @@
+playwright==1.44.0
+httpx==0.27.0
+aioconsole==0.6.1
+pydantic==2.8.2
+dataclasses-json==0.6.7
+ruff==0.6.4
+black==24.4.2
+pytest==8.3.2
+pytest-asyncio==0.23.8
+fastapi==0.111.0
+uvicorn[standard]==0.30.1
+jinja2==3.1.4
+opencv-python
+psutil
+pyautogui
+cryptography

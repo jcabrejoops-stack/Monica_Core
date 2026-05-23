@@ -1,0 +1,56 @@
+C:\Users\jcabr\Monica_Core\web_app.py:53: DeprecationWarning: 
+        on_event is deprecated, use lifespan event handlers instead.
+
+        Read more about it in the
+        [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+        
+  @app.on_event("startup")
+2026-05-23 09:55:38,903 | DEBUG    | asyncio | Using selector: SelectSelector
+INFO:     Started server process [8568]
+INFO:     Waiting for application startup.
+2026-05-23 09:55:38,982 | DEBUG    | core.storage | Directorio asegurado: C:\Users\jcabr\Monica_Core\logs
+2026-05-23 09:55:38,982 | DEBUG    | core.storage | Directorio asegurado: C:\Users\jcabr\Monica_Core\state
+2026-05-23 09:55:38,983 | DEBUG    | core.storage | Directorio asegurado: C:\Users\jcabr\Monica_Core\state\sessions
+2026-05-23 09:55:38,983 | INFO     | core.storage | Logger inicializado en C:\Users\jcabr\Monica_Core\logs\monica_20260523_095538.log
+2026-05-23 09:55:38,984 | INFO     | core.storage | Sistema de almacenamiento inicializado.
+2026-05-23 09:55:38,984 | INFO     | core.storage | Servidor web de Mónica iniciado.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on https://0.0.0.0:8000 (Press CTRL+C to quit)
+
+[HTTPS] Iniciando Monica en modo HTTPS Seguro:
+ - Servidor disponible en: https://localhost:8000
+INFO:     192.168.1.24:65454 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65454 - "GET /api/logs HTTP/1.1" 200 OK
+2026-05-23 09:58:02,563 | INFO     | core.storage | Sincronización: Guardado archivo de sesión en OneDrive -> state/sessions/default.json
+2026-05-23 09:58:02,565 | INFO     | core.storage | Sincronización: Detectados 3 archivos multimedia para subir a la nube.
+2026-05-23 09:58:02,568 | INFO     | core.storage | Sincronización: Archivo subido a OneDrive -> media/images/imagen_20260522_223915.png
+2026-05-23 09:58:02,568 | INFO     | core.storage | Sincronización: ¡Proceso completado! 1 archivos multimedia respaldados en la nube con éxito.
+INFO:     192.168.1.24:65454 - "POST /api/onedrive/sync HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65454 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65470 - "GET / HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65470 - "GET /static/manifest.json HTTP/1.1" 304 Not Modified
+INFO:     192.168.1.24:65476 - "GET /static/style.css HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65477 - "GET /static/logo_monica.png HTTP/1.1" 304 Not Modified
+INFO:     192.168.1.24:65470 - "GET /api/chat/history?session_id=default HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65476 - "GET /api/chat/sessions HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65477 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65470 - "GET /media/images/imagen_20260522_223915.png HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65481 - "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 Not Found
+INFO:     192.168.1.24:65482 - "GET /apple-touch-icon.png HTTP/1.1" 404 Not Found
+INFO:     192.168.1.24:65486 - "GET /static/icon-192.png HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65485 - "GET /static/favicon.ico HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65483 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     192.168.1.24:65484 - "GET /media/images/imagen_20260522_223915.png HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65476 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65477 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65476 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65477 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65476 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65477 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65476 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:65477 - "GET /api/logs HTTP/1.1" 200 OK
+2026-05-23 10:01:04,676 | INFO     | core.storage | Sincronización: Guardado archivo de sesión en OneDrive -> state/sessions/default.json
+2026-05-23 10:01:04,678 | INFO     | core.storage | Sincronización: Detectados 3 archivos multimedia para subir a la nube.
+2026-05-23 10:01:04,686 | INFO     | core.storage | Sincronización: Archivo subido a OneDrive -> media/images/imagen_20260522_223915.png
+2026-05-23 10:01:04,687 | INFO     | core.storage | Sincronización: ¡Proceso completado! 1 archivos multimedia respaldados en la nube con éxito.
+INFO:     192.168.1.24:65476 - "POST /api/onedrive/sync HTTP/1.1" 200 OK

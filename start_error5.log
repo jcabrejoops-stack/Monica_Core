@@ -1,0 +1,395 @@
+C:\Users\jcabr\Monica_Core\web_app.py:53: DeprecationWarning: 
+        on_event is deprecated, use lifespan event handlers instead.
+
+        Read more about it in the
+        [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+        
+  @app.on_event("startup")
+2026-05-23 06:08:58,860 | DEBUG    | asyncio | Using selector: SelectSelector
+INFO:     Started server process [2268]
+INFO:     Waiting for application startup.
+2026-05-23 06:08:58,953 | DEBUG    | core.storage | Directorio asegurado: C:\Users\jcabr\Monica_Core\logs
+2026-05-23 06:08:58,954 | DEBUG    | core.storage | Directorio asegurado: C:\Users\jcabr\Monica_Core\state
+2026-05-23 06:08:58,955 | DEBUG    | core.storage | Directorio asegurado: C:\Users\jcabr\Monica_Core\state\sessions
+2026-05-23 06:08:58,956 | INFO     | core.storage | Logger inicializado en C:\Users\jcabr\Monica_Core\logs\monica_20260523_060858.log
+2026-05-23 06:08:58,956 | INFO     | core.storage | Sistema de almacenamiento inicializado.
+2026-05-23 06:08:58,956 | INFO     | core.storage | Servidor web de Mónica iniciado.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on https://0.0.0.0:8000 (Press CTRL+C to quit)
+
+[HTTPS] Iniciando Monica en modo HTTPS Seguro:
+ - Servidor disponible en: https://localhost:8000
+INFO:     192.168.1.24:64738 - "GET / HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64734 - "GET /media/images/qr_monica.png HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64737 - "GET /static/style.css HTTP/1.1" 304 Not Modified
+INFO:     192.168.1.24:64737 - "GET /static/logo_monica.png HTTP/1.1" 304 Not Modified
+INFO:     192.168.1.24:64734 - "GET /api/chat/history?session_id=default HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64737 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/chat/sessions HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64734 - "GET /media/images/imagen_20260522_223915.png HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64737 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64737 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56884 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64737 - "GET /api/chat/history?session_id=default HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+2026-05-23 06:09:18,187 | INFO     | core.storage | Bucle ReAct de Mónica: Turno 1/10
+2026-05-23 06:09:18,187 | INFO     | core.llm | Usando Motor Híbrido (Intento de Nube -> Respaldo Local)
+2026-05-23 06:09:18,187 | INFO     | core.llm | Intentando motor rápido libre por defecto (Pollinations)...
+2026-05-23 06:09:18,189 | DEBUG    | httpx | load_ssl_context verify=True cert=None trust_env=True http2=False
+2026-05-23 06:09:18,190 | DEBUG    | httpx | load_verify_locations cafile='C:\\Users\\jcabr\\Monica_Core\\venv\\Lib\\site-packages\\certifi\\cacert.pem'
+2026-05-23 06:09:18,953 | DEBUG    | httpcore.connection | connect_tcp.started host='text.pollinations.ai' port=443 local_address=None timeout=45.0 socket_options=None
+2026-05-23 06:09:19,122 | DEBUG    | httpcore.connection | connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000001A59143DFD0>
+2026-05-23 06:09:19,122 | DEBUG    | httpcore.connection | start_tls.started ssl_context=<ssl.SSLContext object at 0x000001A5915548C0> server_hostname='text.pollinations.ai' timeout=45.0
+2026-05-23 06:09:19,193 | DEBUG    | httpcore.connection | start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000001A5915A1B50>
+2026-05-23 06:09:19,194 | DEBUG    | httpcore.http11 | send_request_headers.started request=<Request [b'POST']>
+2026-05-23 06:09:19,197 | DEBUG    | httpcore.http11 | send_request_headers.complete
+2026-05-23 06:09:19,198 | DEBUG    | httpcore.http11 | send_request_body.started request=<Request [b'POST']>
+2026-05-23 06:09:19,199 | DEBUG    | httpcore.http11 | send_request_body.complete
+2026-05-23 06:09:19,199 | DEBUG    | httpcore.http11 | receive_response_headers.started request=<Request [b'POST']>
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+2026-05-23 06:09:27,765 | DEBUG    | httpcore.http11 | receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Sat, 23 May 2026 11:09:27 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'CF-Ray', b'a0039b93c8f14180-BOG'), (b'CF-Cache-Status', b'DYNAMIC'), (b'Access-Control-Allow-Origin', b'*'), (b'ETag', b'W/"1d1-lYz8TPsqhjldKVY9zucHq5q3RKQ"'), (b'Server', b'cloudflare'), (b'Strict-Transport-Security', b'max-age=0; includeSubDomains; preload'), (b'X-Content-Type-Options', b'nosniff'), (b'x-model-used', b'gpt-oss-20b'), (b'x-powered-by', b'Express'), (b'x-usage-completion-text-tokens', b'41'), (b'x-usage-prompt-text-tokens', b'1730'), (b'x-usage-total-tokens', b'1771'), (b'Report-To', b'{"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=Mop6Ceh1UiJ9EYc%2FFyLBZsGXaclYzenF3vBwTP0N1%2Bzs%2B42WVMq364OxZ6R2hwiaTsRTjsXv1hSXv8WWaUtrRgFJug6XfHdEbJOPLcJ9Vgy1GGWISbjUFjfPvpEgjXwnL3Pby5okcw%3D%3D"}]}'), (b'Nel', b'{"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}'), (b'Content-Encoding', b'gzip')])
+2026-05-23 06:09:27,769 | INFO     | httpx | HTTP Request: POST https://text.pollinations.ai/openai "HTTP/1.1 200 OK"
+2026-05-23 06:09:27,772 | DEBUG    | httpcore.http11 | receive_response_body.started request=<Request [b'POST']>
+2026-05-23 06:09:27,779 | DEBUG    | httpcore.http11 | receive_response_body.complete
+2026-05-23 06:09:27,779 | DEBUG    | httpcore.http11 | response_closed.started
+2026-05-23 06:09:27,779 | DEBUG    | httpcore.http11 | response_closed.complete
+2026-05-23 06:09:27,784 | DEBUG    | httpcore.connection | close.started
+2026-05-23 06:09:27,784 | DEBUG    | httpcore.connection | close.complete
+INFO:     192.168.1.24:64737 - "POST /api/message HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/chat/sessions HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64737 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64737 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64737 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64737 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+2026-05-23 06:09:45,727 | INFO     | core.storage | Historial truncado en el índice 9 para edición en sesión: default
+INFO:     192.168.1.24:64737 - "POST /api/chat/edit HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/chat/history?session_id=default HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64737 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/chat/history?session_id=default HTTP/1.1" 200 OK
+2026-05-23 06:09:45,898 | INFO     | core.storage | Bucle ReAct de Mónica: Turno 1/10
+2026-05-23 06:09:45,898 | INFO     | core.llm | Usando Motor Híbrido (Intento de Nube -> Respaldo Local)
+2026-05-23 06:09:45,898 | INFO     | core.llm | Intentando motor rápido libre por defecto (Pollinations)...
+2026-05-23 06:09:45,898 | DEBUG    | httpx | load_ssl_context verify=True cert=None trust_env=True http2=False
+2026-05-23 06:09:45,911 | DEBUG    | httpx | load_verify_locations cafile='C:\\Users\\jcabr\\Monica_Core\\venv\\Lib\\site-packages\\certifi\\cacert.pem'
+2026-05-23 06:09:46,976 | DEBUG    | httpcore.connection | connect_tcp.started host='text.pollinations.ai' port=443 local_address=None timeout=45.0 socket_options=None
+2026-05-23 06:09:46,993 | DEBUG    | httpcore.connection | connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000001A591731E10>
+2026-05-23 06:09:46,993 | DEBUG    | httpcore.connection | start_tls.started ssl_context=<ssl.SSLContext object at 0x000001A591509D00> server_hostname='text.pollinations.ai' timeout=45.0
+2026-05-23 06:09:47,023 | DEBUG    | httpcore.connection | start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000001A59115C150>
+2026-05-23 06:09:47,023 | DEBUG    | httpcore.http11 | send_request_headers.started request=<Request [b'POST']>
+2026-05-23 06:09:47,024 | DEBUG    | httpcore.http11 | send_request_headers.complete
+2026-05-23 06:09:47,025 | DEBUG    | httpcore.http11 | send_request_body.started request=<Request [b'POST']>
+2026-05-23 06:09:47,025 | DEBUG    | httpcore.http11 | send_request_body.complete
+2026-05-23 06:09:47,025 | DEBUG    | httpcore.http11 | receive_response_headers.started request=<Request [b'POST']>
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+2026-05-23 06:09:59,344 | DEBUG    | httpcore.http11 | receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Sat, 23 May 2026 11:09:59 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'CF-Ray', b'a0039c41b9dd9cef-BOG'), (b'CF-Cache-Status', b'DYNAMIC'), (b'Access-Control-Allow-Origin', b'*'), (b'ETag', b'W/"20f-E0Y0oBXl7QMH3RMZuCtkpYbnnck"'), (b'Server', b'cloudflare'), (b'Strict-Transport-Security', b'max-age=0; includeSubDomains; preload'), (b'X-Content-Type-Options', b'nosniff'), (b'x-model-used', b'gpt-oss-20b'), (b'x-powered-by', b'Express'), (b'x-usage-completion-text-tokens', b'53'), (b'x-usage-prompt-text-tokens', b'1733'), (b'x-usage-total-tokens', b'1786'), (b'Report-To', b'{"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=UE04leob4kKh8nfW2RC%2BycJx4frbnoEHh83rmTcd3IVtEDKAHJE2siSI66fbczCMEDs1%2Febr47PgROrirOgYo9WGKm1v5Ue0Buu4fOpCepH9ds%2Bu2z2jJbhf5Zzttxgz3g2flas67w%3D%3D"}]}'), (b'Nel', b'{"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}'), (b'Content-Encoding', b'gzip')])
+2026-05-23 06:09:59,348 | INFO     | httpx | HTTP Request: POST https://text.pollinations.ai/openai "HTTP/1.1 200 OK"
+2026-05-23 06:09:59,349 | DEBUG    | httpcore.http11 | receive_response_body.started request=<Request [b'POST']>
+2026-05-23 06:09:59,349 | DEBUG    | httpcore.http11 | receive_response_body.complete
+2026-05-23 06:09:59,349 | DEBUG    | httpcore.http11 | response_closed.started
+2026-05-23 06:09:59,349 | DEBUG    | httpcore.http11 | response_closed.complete
+2026-05-23 06:09:59,361 | DEBUG    | httpcore.connection | close.started
+2026-05-23 06:09:59,362 | DEBUG    | httpcore.connection | close.complete
+INFO:     192.168.1.24:64737 - "POST /api/message HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/chat/sessions HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64737 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64737 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64737 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64737 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64737 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56892 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64737 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64737 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64737 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64737 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64737 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64737 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64737 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64737 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64737 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64737 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64737 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64737 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64737 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64737 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64737 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56897 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64737 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64737 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64737 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64737 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64737 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64737 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64737 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64737 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64737 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64737 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64737 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64737 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64737 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64737 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64737 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56899 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64737 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64737 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64737 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64737 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64737 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64737 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64737 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+2026-05-23 06:12:46,245 | INFO     | core.storage | Sincronización: Guardado archivo de sesión en OneDrive -> state/sessions/default.json
+2026-05-23 06:12:46,277 | INFO     | core.storage | Sincronización: Detectados 3 archivos multimedia para subir a la nube.
+2026-05-23 06:12:46,290 | INFO     | core.storage | Sincronización: Archivo subido a OneDrive -> media/images/imagen_20260522_223915.png
+2026-05-23 06:12:46,302 | INFO     | core.storage | Sincronización: ¡Proceso completado! 1 archivos multimedia respaldados en la nube con éxito.
+INFO:     192.168.1.24:64737 - "POST /api/onedrive/sync HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64738 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56905 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64743 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64743 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64743 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64743 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64743 - "GET /api/logs HTTP/1.1" 200 OK
+2026-05-23 06:14:11,699 | INFO     | core.storage | Sincronización: Guardado archivo de sesión en OneDrive -> state/sessions/default.json
+2026-05-23 06:14:11,700 | INFO     | core.storage | Sincronización: Detectados 3 archivos multimedia para subir a la nube.
+2026-05-23 06:14:11,752 | INFO     | core.storage | Sincronización: Archivo subido a OneDrive -> media/images/imagen_20260522_223915.png
+2026-05-23 06:14:11,753 | INFO     | core.storage | Sincronización: ¡Proceso completado! 1 archivos multimedia respaldados en la nube con éxito.
+INFO:     192.168.1.24:64743 - "POST /api/onedrive/sync HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64746 - "GET / HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64746 - "GET /api/chat/history?session_id=default HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64748 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64747 - "GET /api/chat/sessions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56910 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64746 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64748 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64746 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64748 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64746 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64748 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64746 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64748 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64746 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64748 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64746 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64748 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64746 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64748 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64746 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64748 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64746 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64748 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64746 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64748 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64746 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64748 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64746 - "GET /api/logs HTTP/1.1" 200 OK
+2026-05-23 06:15:02,967 | DEBUG    | python_multipart.multipart | Calling on_part_begin with no data
+2026-05-23 06:15:02,969 | DEBUG    | python_multipart.multipart | Calling on_header_field with data[42:61]
+2026-05-23 06:15:02,972 | DEBUG    | python_multipart.multipart | Calling on_header_value with data[63:156]
+2026-05-23 06:15:02,974 | DEBUG    | python_multipart.multipart | Calling on_header_end with no data
+2026-05-23 06:15:02,975 | DEBUG    | python_multipart.multipart | Calling on_header_field with data[158:170]
+2026-05-23 06:15:02,976 | DEBUG    | python_multipart.multipart | Calling on_header_value with data[172:182]
+2026-05-23 06:15:02,977 | DEBUG    | python_multipart.multipart | Calling on_header_end with no data
+2026-05-23 06:15:02,979 | DEBUG    | python_multipart.multipart | Calling on_headers_finished with no data
+2026-05-23 06:15:02,981 | DEBUG    | python_multipart.multipart | Calling on_part_data with data[186:16384]
+2026-05-23 06:15:02,981 | DEBUG    | python_multipart.multipart | Calling on_part_data with data[0:49152]
+2026-05-23 06:15:02,989 | DEBUG    | python_multipart.multipart | Calling on_part_data with data[0:16384]
+2026-05-23 06:15:02,998 | DEBUG    | python_multipart.multipart | Calling on_part_data with data[0:16384]
+2026-05-23 06:15:03,011 | DEBUG    | python_multipart.multipart | Calling on_part_data with data[0:16384]
+2026-05-23 06:15:03,013 | DEBUG    | python_multipart.multipart | Calling on_part_data with data[0:16384]
+2026-05-23 06:15:03,016 | DEBUG    | python_multipart.multipart | Calling on_part_data with data[0:16384]
+2026-05-23 06:15:03,017 | DEBUG    | python_multipart.multipart | Calling on_part_data with data[0:7109]
+2026-05-23 06:15:03,017 | DEBUG    | python_multipart.multipart | Calling on_part_end with no data
+2026-05-23 06:15:03,017 | DEBUG    | python_multipart.multipart | Calling on_end with no data
+2026-05-23 06:15:03,032 | INFO     | core.storage | Archivo subido localmente: Capturadepantalla2026-05-23alas6.14.48a.m..heic (154379 bytes)
+INFO:     192.168.1.24:64748 - "POST /api/upload HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64746 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64748 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64746 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64748 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64746 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64748 - "GET /api/chat/history?session_id=default HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64746 - "GET /media/uploads/Capturadepantalla2026-05-23alas6.14.48a.m..heic HTTP/1.1" 200 OK
+2026-05-23 06:15:13,346 | INFO     | core.storage | Procesando archivo adjunto para Mónica: Capturadepantalla2026-05-23alas6.14.48a.m..heic
+2026-05-23 06:15:13,354 | INFO     | core.storage | Bucle ReAct de Mónica: Turno 1/10
+2026-05-23 06:15:13,354 | INFO     | core.llm | Usando Motor Híbrido (Intento de Nube -> Respaldo Local)
+2026-05-23 06:15:13,354 | INFO     | core.llm | Intentando motor rápido libre por defecto (Pollinations)...
+2026-05-23 06:15:13,363 | DEBUG    | httpx | load_ssl_context verify=True cert=None trust_env=True http2=False
+2026-05-23 06:15:13,363 | DEBUG    | httpx | load_verify_locations cafile='C:\\Users\\jcabr\\Monica_Core\\venv\\Lib\\site-packages\\certifi\\cacert.pem'
+2026-05-23 06:15:14,136 | DEBUG    | httpcore.connection | connect_tcp.started host='text.pollinations.ai' port=443 local_address=None timeout=45.0 socket_options=None
+INFO:     192.168.1.24:64780 - "GET /api/logs HTTP/1.1" 200 OK
+2026-05-23 06:15:14,218 | DEBUG    | httpcore.connection | connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000001A591229290>
+2026-05-23 06:15:14,218 | DEBUG    | httpcore.connection | start_tls.started ssl_context=<ssl.SSLContext object at 0x000001A591671400> server_hostname='text.pollinations.ai' timeout=45.0
+2026-05-23 06:15:14,269 | DEBUG    | httpcore.connection | start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000001A591223DD0>
+2026-05-23 06:15:14,269 | DEBUG    | httpcore.http11 | send_request_headers.started request=<Request [b'POST']>
+2026-05-23 06:15:14,279 | DEBUG    | httpcore.http11 | send_request_headers.complete
+2026-05-23 06:15:14,280 | DEBUG    | httpcore.http11 | send_request_body.started request=<Request [b'POST']>
+2026-05-23 06:15:14,284 | DEBUG    | httpcore.http11 | send_request_body.complete
+2026-05-23 06:15:14,285 | DEBUG    | httpcore.http11 | receive_response_headers.started request=<Request [b'POST']>
+INFO:     192.168.1.24:64746 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56916 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64780 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64746 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64780 - "GET /api/logs HTTP/1.1" 200 OK
+2026-05-23 06:15:22,477 | DEBUG    | httpcore.http11 | receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Sat, 23 May 2026 11:15:22 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'CF-Ray', b'a003a43f08e427d4-BOG'), (b'CF-Cache-Status', b'DYNAMIC'), (b'Access-Control-Allow-Origin', b'*'), (b'ETag', b'W/"693-eVzJj2w3CmNafjRzDKXt4e9ZOIw"'), (b'Server', b'cloudflare'), (b'Strict-Transport-Security', b'max-age=0; includeSubDomains; preload'), (b'X-Content-Type-Options', b'nosniff'), (b'x-model-used', b'gpt-oss-20b'), (b'x-powered-by', b'Express'), (b'x-usage-completion-text-tokens', b'350'), (b'x-usage-prompt-text-tokens', b'1784'), (b'x-usage-total-tokens', b'2134'), (b'Report-To', b'{"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=G%2FomS6bQl2BI85oXdAH1hc09%2FBz1sqg7ClHOTCjlSvMJiKAStwyS4lx1DfIo1dURcw%2F%2F0IlbN8MG0Sy8xl78uzt%2Br0t34rZlvJa3CjiX1Xgf0kPq422cBLh6Tce8G%2B3mnEacyqPGpQ%3D%3D"}]}'), (b'Nel', b'{"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}'), (b'Content-Encoding', b'gzip')])
+2026-05-23 06:15:22,477 | INFO     | httpx | HTTP Request: POST https://text.pollinations.ai/openai "HTTP/1.1 200 OK"
+2026-05-23 06:15:22,477 | DEBUG    | httpcore.http11 | receive_response_body.started request=<Request [b'POST']>
+2026-05-23 06:15:22,487 | DEBUG    | httpcore.http11 | receive_response_body.complete
+2026-05-23 06:15:22,489 | DEBUG    | httpcore.http11 | response_closed.started
+2026-05-23 06:15:22,490 | DEBUG    | httpcore.http11 | response_closed.complete
+2026-05-23 06:15:22,493 | DEBUG    | httpcore.connection | close.started
+2026-05-23 06:15:22,495 | DEBUG    | httpcore.connection | close.complete
+2026-05-23 06:15:22,495 | INFO     | core.storage | Gestionando archivos: copy en media/uploads/Capturadepantalla2026-05-23alas6.14.48a.m..heic
+2026-05-23 06:15:22,509 | INFO     | core.storage | Bucle ReAct de Mónica: Turno 2/10
+2026-05-23 06:15:22,511 | INFO     | core.llm | Usando Motor Híbrido (Intento de Nube -> Respaldo Local)
+2026-05-23 06:15:22,511 | INFO     | core.llm | Intentando motor rápido libre por defecto (Pollinations)...
+2026-05-23 06:15:22,515 | DEBUG    | httpx | load_ssl_context verify=True cert=None trust_env=True http2=False
+2026-05-23 06:15:22,522 | DEBUG    | httpx | load_verify_locations cafile='C:\\Users\\jcabr\\Monica_Core\\venv\\Lib\\site-packages\\certifi\\cacert.pem'
+2026-05-23 06:15:23,301 | DEBUG    | httpcore.connection | connect_tcp.started host='text.pollinations.ai' port=443 local_address=None timeout=45.0 socket_options=None
+2026-05-23 06:15:23,324 | DEBUG    | httpcore.connection | connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000001A5917440D0>
+2026-05-23 06:15:23,324 | DEBUG    | httpcore.connection | start_tls.started ssl_context=<ssl.SSLContext object at 0x000001A5916711C0> server_hostname='text.pollinations.ai' timeout=45.0
+2026-05-23 06:15:23,355 | DEBUG    | httpcore.connection | start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000001A5914EB810>
+2026-05-23 06:15:23,356 | DEBUG    | httpcore.http11 | send_request_headers.started request=<Request [b'POST']>
+2026-05-23 06:15:23,356 | DEBUG    | httpcore.http11 | send_request_headers.complete
+2026-05-23 06:15:23,357 | DEBUG    | httpcore.http11 | send_request_body.started request=<Request [b'POST']>
+2026-05-23 06:15:23,358 | DEBUG    | httpcore.http11 | send_request_body.complete
+2026-05-23 06:15:23,358 | DEBUG    | httpcore.http11 | receive_response_headers.started request=<Request [b'POST']>
+INFO:     192.168.1.24:64746 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64780 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64746 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64780 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64746 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64780 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64746 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64780 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64746 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64780 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64746 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64780 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64746 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64780 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64746 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64780 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64746 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64780 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64746 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64780 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64746 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64780 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64746 - "GET /api/logs HTTP/1.1" 200 OK
+2026-05-23 06:16:08,354 | DEBUG    | httpcore.http11 | receive_response_headers.failed exception=ReadTimeout(TimeoutError())
+2026-05-23 06:16:08,355 | DEBUG    | httpcore.http11 | response_closed.started
+2026-05-23 06:16:08,359 | DEBUG    | httpcore.http11 | response_closed.complete
+2026-05-23 06:16:08,360 | WARNING  | core.llm | Fallo en Pollinations: 
+2026-05-23 06:16:08,360 | WARNING  | core.llm | Conmutando a Modo Soberano Local (Fallback)...
+2026-05-23 06:16:08,360 | INFO     | core.llm | Usando Motor Soberano Local (Ollama) - Modelo: qwen2.5-coder:1.5b
+2026-05-23 06:16:08,360 | DEBUG    | core.llm | Ollama Local request (model=qwen2.5-coder:1.5b) intento 1
+2026-05-23 06:16:08,360 | DEBUG    | httpcore.connection | connect_tcp.started host='127.0.0.1' port=11434 local_address=None timeout=180.0 socket_options=None
+2026-05-23 06:16:08,372 | DEBUG    | httpcore.connection | connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x000001A591733AD0>
+2026-05-23 06:16:08,377 | DEBUG    | httpcore.http11 | send_request_headers.started request=<Request [b'POST']>
+2026-05-23 06:16:08,380 | DEBUG    | httpcore.http11 | send_request_headers.complete
+2026-05-23 06:16:08,382 | DEBUG    | httpcore.http11 | send_request_body.started request=<Request [b'POST']>
+2026-05-23 06:16:08,382 | DEBUG    | httpcore.http11 | send_request_body.complete
+2026-05-23 06:16:08,382 | DEBUG    | httpcore.http11 | receive_response_headers.started request=<Request [b'POST']>
+INFO:     192.168.1.24:64780 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64746 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64780 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64746 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57068 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64780 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64746 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64780 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64746 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64780 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64746 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64780 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64746 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64780 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64746 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64780 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64746 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64780 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64746 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64780 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64746 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64780 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64746 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64780 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64746 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64780 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64746 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64780 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64746 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64780 - "GET /api/logs HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64746 - "GET /api/logs HTTP/1.1" 200 OK
+2026-05-23 06:17:19,410 | INFO     | core.storage | Sincronización: Guardado archivo de sesión en OneDrive -> state/sessions/default.json
+2026-05-23 06:17:19,410 | INFO     | core.storage | Sincronización: Detectados 3 archivos multimedia para subir a la nube.
+2026-05-23 06:17:19,415 | INFO     | core.storage | Sincronización: Archivo subido a OneDrive -> media/images/imagen_20260522_223915.png
+2026-05-23 06:17:19,415 | INFO     | core.storage | Sincronización: ¡Proceso completado! 1 archivos multimedia respaldados en la nube con éxito.
+2026-05-23 06:17:19,415 | INFO     | core.storage | Sincronización: Guardado archivo de sesión en OneDrive -> state/sessions/default.json
+2026-05-23 06:17:19,415 | INFO     | core.storage | Sincronización: Detectados 3 archivos multimedia para subir a la nube.
+2026-05-23 06:17:19,415 | INFO     | core.storage | Sincronización: Archivo subido a OneDrive -> media/images/imagen_20260522_223915.png
+2026-05-23 06:17:19,415 | INFO     | core.storage | Sincronización: ¡Proceso completado! 1 archivos multimedia respaldados en la nube con éxito.
+INFO:     192.168.1.24:64780 - "POST /api/onedrive/sync HTTP/1.1" 200 OK
+INFO:     192.168.1.24:64746 - "POST /api/onedrive/sync HTTP/1.1" 200 OK
+2026-05-23 06:18:04,503 | DEBUG    | httpcore.http11 | receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Type', b'application/json; charset=utf-8'), (b'Date', b'Sat, 23 May 2026 11:18:04 GMT'), (b'Transfer-Encoding', b'chunked')])
+2026-05-23 06:18:04,504 | INFO     | httpx | HTTP Request: POST http://127.0.0.1:11434/api/generate "HTTP/1.1 200 OK"
+2026-05-23 06:18:04,504 | DEBUG    | httpcore.http11 | receive_response_body.started request=<Request [b'POST']>
+2026-05-23 06:18:04,505 | DEBUG    | httpcore.http11 | receive_response_body.complete
+2026-05-23 06:18:04,505 | DEBUG    | httpcore.http11 | response_closed.started
+2026-05-23 06:18:04,505 | DEBUG    | httpcore.http11 | response_closed.complete

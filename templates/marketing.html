@@ -1,0 +1,540 @@
+<!-- templates/marketing.html -->
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
+
+    #marketing-dashboard {
+        position: fixed;
+        bottom: -100%;
+        left: 0;
+        width: 100%;
+        height: 92vh;
+        background: linear-gradient(180deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+        box-shadow: 0 -20px 60px rgba(0, 0, 0, 0.8);
+        border-top-left-radius: 30px;
+        border-top-right-radius: 30px;
+        z-index: 10000;
+        transition: bottom 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+        display: flex;
+        flex-direction: column;
+        font-family: 'Outfit', sans-serif;
+        color: #f1f5f9;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    #marketing-dashboard.open {
+        bottom: 0;
+    }
+
+    .mkt-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 30px;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+        background: rgba(0,0,0,0.2);
+        border-top-left-radius: 30px;
+        border-top-right-radius: 30px;
+    }
+
+    .mkt-close-btn {
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.1);
+        color: white;
+        font-size: 1.2rem;
+        cursor: pointer;
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: all 0.3s;
+    }
+    .mkt-close-btn:hover { background: rgba(255,255,255,0.15); }
+
+    .mkt-content {
+        flex: 1;
+        overflow-y: auto;
+        padding: 30px;
+    }
+
+    .mkt-tabs {
+        display: flex;
+        justify-content: space-around;
+        padding: 15px 20px;
+        background: rgba(0,0,0,0.4);
+        border-top: 1px solid rgba(255,255,255,0.05);
+        padding-bottom: env(safe-area-inset-bottom, 20px);
+    }
+
+    .mkt-tab-btn {
+        background: transparent;
+        color: #94a3b8;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 14px;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .mkt-tab-btn.active {
+        background: linear-gradient(135deg, #00f0ff, #0080ff);
+        color: #000;
+        box-shadow: 0 4px 15px rgba(0, 240, 255, 0.3);
+    }
+
+    /* Vistas Generales */
+    .view-section { display: none; flex-direction: column; gap: 25px; height: 100%; }
+    
+    /* Cajas y Botones Premium */
+    .mkt-card {
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 20px;
+        padding: 25px;
+        backdrop-filter: blur(10px);
+    }
+
+    .mkt-btn-primary {
+        background: linear-gradient(135deg, #a855f7, #6366f1);
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.2s;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .mkt-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(168, 85, 247, 0.4); }
+
+    .mkt-btn-plus {
+        background: rgba(255,255,255,0.1);
+        color: white;
+        border: 1px dashed rgba(255,255,255,0.3);
+        padding: 15px;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        width: 100%;
+        text-align: center;
+        font-size: 1rem;
+    }
+    .mkt-btn-plus:hover { background: rgba(255,255,255,0.15); border-style: solid; border-color: #00f0ff; color: #00f0ff; }
+
+    .mkt-input {
+        width: 100%;
+        background: rgba(0,0,0,0.3);
+        border: 1px solid rgba(255,255,255,0.1);
+        color: white;
+        padding: 12px 16px;
+        border-radius: 10px;
+        font-family: 'Outfit', sans-serif;
+        margin-top: 5px;
+        box-sizing: border-box;
+    }
+    .mkt-input:focus { outline: none; border-color: #00f0ff; }
+
+    /* Switch Estilo Apple */
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 50px;
+        height: 28px;
+    }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .slider {
+        position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+        background-color: rgba(255,255,255,0.1); transition: .4s; border-radius: 34px;
+    }
+    .slider:before {
+        position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 4px;
+        background-color: white; transition: .4s; border-radius: 50%;
+    }
+    input:checked + .slider { background-color: #00f0ff; }
+    input:checked + .slider:before { transform: translateX(22px); }
+
+    .toggle-row { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; }
+
+    /* Optimizaciones Móviles */
+    @media (max-width: 600px) {
+        .mkt-header { padding: 15px 20px; }
+        .mkt-content { padding: 15px; }
+        .mkt-card { padding: 15px; }
+        
+        .mkt-tabs {
+            padding: 10px;
+            gap: 5px;
+        }
+        .mkt-tab-btn {
+            padding: 10px 12px;
+            font-size: 0.85rem;
+            flex: 1;
+            justify-content: center;
+        }
+
+        /* Convertir grillas de 2 columnas en 1 columna */
+        div[style*="display:grid; grid-template-columns:1fr 1fr"] {
+            grid-template-columns: 1fr !important;
+            gap: 10px !important;
+        }
+
+        /* Hacer que los modales con flex horizontal se apilen */
+        #modal-scraping div[style*="display:flex; gap:15px; margin-bottom:15px;"],
+        #modal-add-nutricion div[style*="display:flex; gap:15px; margin-bottom:20px;"] {
+            flex-direction: column;
+            gap: 10px !important;
+        }
+        
+        #modal-scraping div[style*="flex:2;"], 
+        #modal-scraping div[style*="flex:1;"] {
+            flex: none;
+            width: 100%;
+        }
+
+        /* Ajustar título y botones principales */
+        .view-section > div[style*="display:flex; justify-content:space-between; align-items:center;"] {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        .view-section > div[style*="display:flex; justify-content:space-between; align-items:center;"] > div[style*="display:flex; gap:10px;"] {
+            width: 100%;
+            display: flex;
+        }
+        .mkt-btn-primary {
+            flex: 1;
+            justify-content: center;
+        }
+    }
+</style>
+
+<div id="marketing-dashboard">
+    <!-- Header -->
+    <div class="mkt-header">
+        <h2 style="margin:0; font-weight:700; letter-spacing:1px;"><span style="color:#00f0ff;">Marketing</span></h2>
+        <!-- Botón de cierre simétrico estilo chevron -->
+        <button onclick="cerrarMarketingDashboard()" class="mkt-close-btn" title="Ocultar Panel">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+    </div>
+
+    <!-- Contenidos Centrales -->
+    <div class="mkt-content">
+        
+        <!-- 1. VISTA: CONTACTOS Y SCRAPING -->
+        <div id="view-contactos" class="view-section" style="display:flex;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                    <h3 style="margin:0; font-size:1.6rem;">👥 Base de Contactos</h3>
+                    <p style="color:#94a3b8; margin:5px 0 0 0;">Gestión de leads y extracción de bases de datos.</p>
+                </div>
+                <div style="display:flex; gap:10px;">
+                    <button class="mkt-btn-primary" style="background:rgba(255,255,255,0.1); border:1px solid #00f0ff; color:#00f0ff;" onclick="toggleMktModal('modal-scraping')">🕷️ Extraer Datos</button>
+                    <button class="mkt-btn-primary" onclick="toggleMktModal('modal-prospectar')">▶ Prospectar</button>
+                </div>
+            </div>
+
+            <!-- Modal Inline de Scraping -->
+            <div id="modal-scraping" class="mkt-card" style="display:none; border-color:#00f0ff; margin-top:15px;">
+                <h4 style="margin-top:0; color:#00f0ff;">Configuración de Extracción</h4>
+                <div style="display:flex; gap:15px; margin-bottom:15px;">
+                    <div style="flex:2;">
+                        <label style="font-size:0.85rem; color:#94a3b8;">¿De dónde extraer? (URL / Plataforma)</label>
+                        <input type="text" class="mkt-input" placeholder="Ej: https://maps.google.com/ o 'Grupos de Facebook'">
+                    </div>
+                    <div style="flex:1;">
+                        <label style="font-size:0.85rem; color:#94a3b8;">N° a Extraer</label>
+                        <input type="number" class="mkt-input" placeholder="Ej: 50">
+                    </div>
+                </div>
+                <div style="margin-bottom:20px;">
+                    <label style="font-size:0.85rem; color:#94a3b8;">¿Qué datos extraer? (Ej: Solo teléfonos, Emails, Nombres, Empresas)</label>
+                    <input type="text" class="mkt-input" placeholder="Especifica qué información necesitas recolectar...">
+                </div>
+                <div style="display:flex; align-items:center; gap:15px;">
+                    <button class="mkt-btn-primary" style="background:#00f0ff; color:#000;" onclick="simularScraping()">▶ Iniciar Extracción</button>
+                    <span id="scraping-status" style="color:#facc15; font-size:0.9rem; display:none;">⏳ Extrayendo datos...</span>
+                </div>
+            </div>
+
+            <!-- Modal Inline de Prospección -->
+            <div id="modal-prospectar" class="mkt-card" style="display:none; border-color:#a855f7; margin-top:15px;">
+                <h4 style="margin-top:0; color:#a855f7;">Campaña de Prospección (Primer Contacto)</h4>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-bottom:15px;">
+                    <div>
+                        <label style="font-size:0.85rem; color:#94a3b8;">Base de datos (Lista Extraída)</label>
+                        <select class="mkt-input">
+                            <option>Lista Reciente: Extracción 1</option>
+                            <option>Lista Guardada: Restaurantes</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="font-size:0.85rem; color:#94a3b8;">Oferta o Producto Ancla</label>
+                        <select class="mkt-input">
+                            <option>Producto: Consultoría IA</option>
+                        </select>
+                    </div>
+                </div>
+                <div style="margin-bottom:20px;">
+                    <label style="font-size:0.85rem; color:#94a3b8;">Tono del Mensaje Rompehielo</label>
+                    <input type="text" class="mkt-input" placeholder="Ej: Casual, directo, ofreciendo una prueba gratuita...">
+                </div>
+                <button class="mkt-btn-primary" style="background:#a855f7; color:white; width:100%; justify-content:center;" onclick="alert('Configuración guardada. Prospección Iniciada.')">▶ Iniciar Prospección con IA</button>
+            </div>
+
+            <!-- Lista de Contactos -->
+            <div class="mkt-card" style="flex:1;">
+                <table style="width:100%; border-collapse:collapse; text-align:left; font-size:0.95rem;">
+                    <thead>
+                        <tr style="border-bottom:1px solid rgba(255,255,255,0.1);">
+                            <th style="padding:15px 10px; color:#94a3b8; font-weight:600;">Nombre / Teléfono</th>
+                            <th style="color:#94a3b8; font-weight:600;">Referencia (Tipo)</th>
+                            <th style="color:#94a3b8; font-weight:600;">Estado de Pipeline</th>
+                        </tr>
+                    </thead>
+                    <tbody id="lista-contactos-body">
+                        <tr><td colspan="3" style="padding:20px 10px; color:#64748b; text-align:center;">No hay datos extraídos.</td></tr>
+                    </tbody>
+                </table>
+                <div style="margin-top:20px; display:flex; justify-content:flex-end;">
+                    <button class="mkt-btn-primary" style="background:#ef4444; color:white; font-size:0.85rem; padding:8px 16px;" onclick="descargarPDFContactos()">📄 Extraer a PDF</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. VISTA: SERVICIOS -->
+        <div id="view-productos" class="view-section">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                    <h3 style="margin:0; font-size:1.6rem; display:flex; align-items:center; gap:8px;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00f0ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>
+                        Servicios Digitales
+                    </h3>
+                    <p style="color:#94a3b8; margin:5px 0 0 0;">Configura tu arsenal para campañas y tiendas.</p>
+                </div>
+            </div>
+
+            <!-- Botón Agregar Nuevo Servicio -->
+            <button class="mkt-btn-plus" onclick="toggleMktModal('modal-add-producto')">➕ Agregar Nuevo Servicio</button>
+
+            <!-- Formulario Inline de Servicio -->
+            <div id="modal-add-producto" class="mkt-card" style="display:none; border-color:#a855f7;">
+                <h4 style="margin-top:0; color:#a855f7;">Creador de Servicio</h4>
+                <label style="font-size:0.85rem; color:#94a3b8;">Nombre del Servicio</label>
+                <input type="text" class="mkt-input" style="margin-bottom:15px;" placeholder="Ej: Curso de IA">
+
+                <!-- Variables (Múltiples) -->
+                <div style="display:flex; gap:10px; margin-bottom:20px;">
+                    <button class="mkt-btn-plus" style="padding:10px;">+ Agregar Foto</button>
+                    <button class="mkt-btn-plus" style="padding:10px;">+ Texto Descriptivo</button>
+                    <button class="mkt-btn-plus" style="padding:10px;">+ Video Ilustrativo</button>
+                </div>
+
+                <!-- Palanca de Tienda -->
+                <div class="mkt-card" style="background:rgba(0,0,0,0.2); padding:15px; margin-bottom:15px;">
+                    <div class="toggle-row" style="margin-top:0;">
+                        <span style="font-weight:600;">Subir a la Tienda</span>
+                        <label class="switch">
+                            <input type="checkbox" id="toggle-tienda" onchange="toggleTiendaFields()">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <!-- Campos Ocultos de Tienda -->
+                    <div id="campos-tienda" style="display:none; margin-top:15px; border-top:1px solid rgba(255,255,255,0.1); padding-top:15px;">
+                        <div style="display:flex; gap:15px;">
+                            <div style="flex:1;"><label style="font-size:0.8rem; color:#94a3b8;">Precio</label><input type="text" class="mkt-input"></div>
+                            <div style="flex:1;"><label style="font-size:0.8rem; color:#94a3b8;">Cantidad</label><input type="number" class="mkt-input"></div>
+                        </div>
+                        <div style="margin-top:10px;">
+                            <label style="font-size:0.8rem; color:#94a3b8;">URL de tu Tienda Destino</label>
+                            <input type="text" class="mkt-input" placeholder="https://...">
+                        </div>
+                    </div>
+                </div>
+
+                <button class="mkt-btn-primary" style="width:100%; justify-content:center;" onclick="alert('Servicio guardado exitosamente.')">Guardar Servicio</button>
+            </div>
+
+            <!-- Cuadrícula de Productos Guardados -->
+            <div id="grid-productos" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(300px, 1fr)); gap:20px;">
+                <!-- Producto Ejemplo -->
+                <div class="mkt-card" style="display:flex; flex-direction:column; gap:15px;">
+                    <div style="display:flex; align-items:center; gap:15px;">
+                        <div style="width:60px; height:60px; background:rgba(255,255,255,0.1); border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.5rem;">📱</div>
+                        <div>
+                            <h4 style="margin:0;">Consultoría IA</h4>
+                            <span style="font-size:0.8rem; color:#34d399;">● En tienda</span>
+                        </div>
+                    </div>
+                    <div style="font-size:0.85rem; color:#94a3b8; display:flex; gap:10px;">
+                        <span>📷 3 Fotos</span> <span>📝 5 Textos</span> <span>🎥 1 Video</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. VISTA: NUTRICIÓN -->
+        <div id="view-nutricion" class="view-section">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                    <h3 style="margin:0; font-size:1.6rem;">📨 Nutrición</h3>
+                    <p style="color:#94a3b8; margin:5px 0 0 0;">Crea secuencias de seguimiento inteligentes.</p>
+                </div>
+            </div>
+
+            <!-- Botón Agregar Lista -->
+            <button class="mkt-btn-plus" onclick="toggleMktModal('modal-add-nutricion')">➕ Crear Nueva Campaña de Nutrición</button>
+
+            <!-- Formulario de Nutrición -->
+            <div id="modal-add-nutricion" class="mkt-card" style="display:none; border-color:#34d399; margin-top:15px;">
+                <h4 style="margin-top:0; color:#34d399;">Creador de Campaña Automática</h4>
+                
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-bottom:15px;">
+                    <div>
+                        <label style="font-size:0.85rem; color:#94a3b8;">Tipo de Lista (Categoría libre)</label>
+                        <input type="text" class="mkt-input" placeholder="Ej: Leads Fríos Diciembre, Clientes VIP...">
+                    </div>
+                    <div>
+                        <label style="font-size:0.85rem; color:#94a3b8;">Lista de Contactos (Base Extraída)</label>
+                        <select class="mkt-input">
+                            <option>-- Seleccionar Lista --</option>
+                            <option>Extracción: Restaurantes Centro</option>
+                            <option>Extracción: Inmobiliarias</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:15px;">
+                    <label style="font-size:0.85rem; color:#94a3b8;">Argumentos / Paquetes de Formato (Contenidos Pre-grabados)</label>
+                    <div style="background:rgba(0,0,0,0.2); border:1px solid rgba(255,255,255,0.05); padding:10px; border-radius:10px; margin-top:5px;">
+                        <div style="display:flex; gap:10px; margin-bottom:10px; flex-wrap:wrap;">
+                            <span style="background:rgba(168, 85, 247, 0.2); color:#a855f7; padding:5px 10px; border-radius:8px; font-size:0.85rem;">📝 Texto Persuasivo</span>
+                            <span style="background:rgba(52, 211, 153, 0.2); color:#34d399; padding:5px 10px; border-radius:8px; font-size:0.85rem;">🎥 Video Testimonio</span>
+                            <span style="background:rgba(0, 240, 255, 0.2); color:#00f0ff; padding:5px 10px; border-radius:8px; font-size:0.85rem;">🎁 Oferta Directa</span>
+                        </div>
+                        <button class="mkt-btn-plus" style="padding:8px; font-size:0.85rem;">+ Crear Nuevo Paquete de Argumento</button>
+                    </div>
+                </div>
+
+                <div style="display:flex; gap:15px; margin-bottom:20px; align-items:center;">
+                    <div style="flex:1;">
+                        <label style="font-size:0.85rem; color:#94a3b8;">¿Cada cuánto enviar los mensajes? (Lapso en días)</label>
+                        <input type="number" class="mkt-input" placeholder="Ej: 3" min="1">
+                    </div>
+                    <div style="flex:1; display:flex; align-items:center; gap:10px; margin-top:20px;">
+                        <label class="switch">
+                            <input type="checkbox" checked>
+                            <span class="slider"></span>
+                        </label>
+                        <span style="font-size:0.85rem; color:#f1f5f9;">Variación de Ruido (Anti-Ban)</span>
+                    </div>
+                </div>
+
+                <button class="mkt-btn-primary" style="background:#34d399; color:black; width:100%; justify-content:center;" onclick="alert('Campaña de Nutrición configurada y guardada.')">▶ Guardar e Iniciar Campaña</button>
+            </div>
+            
+            <!-- Listas Activas -->
+            <div style="margin-top:10px;">
+                <h4 style="color:white; margin-bottom:15px;">Campañas en curso</h4>
+                <div class="mkt-card" style="display:flex; justify-content:space-between; align-items:center;">
+                    <div>
+                        <h4 style="margin:0; color:#00f0ff;">Campaña: Restaurantes Locales</h4>
+                        <p style="margin:5px 0 0 0; font-size:0.85rem; color:#94a3b8;">Prospección • 50 leads • Ruido Irregular activado</p>
+                    </div>
+                    <span style="background:rgba(0, 240, 255, 0.2); color:#00f0ff; padding:5px 12px; border-radius:20px; font-size:0.85rem; font-weight:600;">En proceso</span>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Navegación Inferior (Pestañas) -->
+    <div class="mkt-tabs">
+        <button class="mkt-tab-btn active" id="tab-btn-contactos">👥 Leads</button>
+        <button class="mkt-tab-btn" id="tab-btn-productos" style="display:flex; align-items:center; gap:5px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>
+            Servicios
+        </button>
+        <button class="mkt-tab-btn" id="tab-btn-nutricion">📨 Nutrición</button>
+    </div>
+</div>
+
+<script>
+    // Lógica para abrir/cerrar el panel deslizante completo
+    function abrirMarketingDashboard() {
+        document.getElementById('marketing-dashboard').classList.add('open');
+    }
+
+    function cerrarMarketingDashboard() {
+        document.getElementById('marketing-dashboard').classList.remove('open');
+    }
+
+    // Toggle modales inline
+    function toggleMktModal(id) {
+        const el = document.getElementById(id);
+        el.style.display = el.style.display === 'none' ? 'block' : 'none';
+    }
+
+    // Lógica Interna de Tienda
+    function toggleTiendaFields() {
+        const isChecked = document.getElementById('toggle-tienda').checked;
+        document.getElementById('campos-tienda').style.display = isChecked ? 'block' : 'none';
+    }
+
+
+
+    // Lógica para PDF de Contactos
+    function descargarPDFContactos() {
+        alert("Generando PDF de la base de contactos...");
+        // Mónica internamente llamaría a la librería jsPDF o al backend en Python para generar el PDF.
+        setTimeout(() => {
+            alert("✅ PDF Generado con éxito. Se ha guardado en tus descargas.");
+        }, 1500);
+    }
+
+    // Simular Scraping
+    function simularScraping() {
+        document.getElementById('scraping-status').style.display = 'inline';
+        setTimeout(() => {
+            document.getElementById('scraping-status').innerText = '✅ Extracción completada';
+            document.getElementById('lista-contactos-body').innerHTML = `
+                <tr><td style="padding:15px 10px;">Juan Pérez<br><span style="font-size:0.8rem; color:#94a3b8;">+57 300 0000000</span></td><td>Restaurantes</td><td><span style="color:#60a5fa;">Nuevo</span></td></tr>
+                <tr style="border-top:1px solid rgba(255,255,255,0.05);"><td style="padding:15px 10px;">María Gómez<br><span style="font-size:0.8rem; color:#94a3b8;">+57 300 1111111</span></td><td>Restaurantes</td><td><span style="color:#60a5fa;">Nuevo</span></td></tr>
+            `;
+        }, 2000);
+    }
+
+    // Lógica de Pestañas Principales (Navegación Inferior)
+    document.addEventListener('DOMContentLoaded', () => {
+        const btnContactos = document.getElementById('tab-btn-contactos');
+        const btnProductos = document.getElementById('tab-btn-productos');
+        const btnNutricion = document.getElementById('tab-btn-nutricion');
+
+        const viewContactos = document.getElementById('view-contactos');
+        const viewProductos = document.getElementById('view-productos');
+        const viewNutricion = document.getElementById('view-nutricion');
+
+        function switchTab(activeBtn, activeView) {
+            [btnContactos, btnProductos, btnNutricion].forEach(b => b.classList.remove('active'));
+            [viewContactos, viewProductos, viewNutricion].forEach(v => v.style.display = 'none');
+            
+            activeBtn.classList.add('active');
+            activeView.style.display = 'flex';
+        }
+
+        if(btnContactos) btnContactos.addEventListener('click', () => switchTab(btnContactos, viewContactos));
+        if(btnProductos) btnProductos.addEventListener('click', () => switchTab(btnProductos, viewProductos));
+        if(btnNutricion) btnNutricion.addEventListener('click', () => switchTab(btnNutricion, viewNutricion));
+    });
+</script>
