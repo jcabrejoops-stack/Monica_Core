@@ -28,26 +28,26 @@ Reglas de Comportamiento:
 """
 
 async def run_vibe_agent(user_prompt: str, max_iterations: int = 15) -> str:
-    """Bucle autónomo ReAct para Mónica usando HTTP nativo directo a Gemini."""
+    """Bucle autónomo ReAct para Mónica usando HTTP nativo directo a Gemini con rotación de llaves."""
     import httpx
     from core.storage import get_all_api_keys
     
-    # 1. Intentar sacar la llave del búnker de APIs (interfaz web)
-    gemini_key = None
+    # 1. Intentar sacar las llaves del búnker de APIs (interfaz web)
+    gemini_keys = []
     keys = get_all_api_keys()
     for k in keys:
         if k.get("service") == "gemini":
-            gemini_key = k.get("key")
-            break
+            gemini_keys.append(k.get("key"))
             
     # 2. Fallback a la configuración hardcodeada
-    if not gemini_key:
-        gemini_key = config.gemini_api_key
+    if not gemini_keys:
+        if config.gemini_api_key and config.gemini_api_key != "AIzaSyC-...":
+            gemini_keys.append(config.gemini_api_key)
         
-    if not gemini_key or gemini_key == "AIzaSyC-...":
-        return "⚠️ Necesito que inyectes tu API Key de Gemini en el búnker de APIs para poder pensar."
+    if not gemini_keys:
+        return "⚠️ Necesito que inyectes al menos una API Key de Gemini en el búnker de APIs para poder pensar."
 
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/{config.default_model}:generateContent?key={gemini_key}"
+    key_idx = 0
     headers = {"Content-Type": "application/json"}
 
     # --- ENRUTADOR DE INTENCIONES (Rápido) ---
@@ -85,7 +85,26 @@ async def run_vibe_agent(user_prompt: str, max_iterations: int = 15) -> str:
                 payload["tools"] = gemini_tools
             
             try:
-                resp = await client.post(url, headers=headers, json=payload)
+                # Intentar hacer la petición con la llave actual. Si da 429, probar otra llave.
+                success = False
+                resp = None
+                for _ in range(len(gemini_keys)):
+                    gemini_key = gemini_keys[key_idx]
+                    url = f"https://generativelanguage.googleapis.com/v1beta/models/{config.default_model}:generateContent?key={gemini_key}"
+                    
+                    resp = await client.post(url, headers=headers, json=payload)
+                    if resp.status_code == 429:
+                        # Rotar llave inmediatamente y reintentar con la siguiente
+                        print(f"[Vibe Agent] Llave #{key_idx + 1} sin cuota (429). Rotando...")
+                        key_idx = (key_idx + 1) % len(gemini_keys)
+                        continue
+                    
+                    success = True
+                    break
+                
+                if not success:
+                    return f"Error en API Gemini (429 - Todas las llaves del búnker agotaron su cuota): {resp.text if resp else ''}"
+                
                 if resp.status_code != 200:
                     return f"Error en API Gemini ({resp.status_code}): {resp.text}"
                     

@@ -1,6 +1,6 @@
 @echo off
 :: Desplazarse al directorio del proyecto local
-cd /d "C:\Users\jcabr\Monica_Core"
+cd /d "%~dp0"
 
 :: Comprobar si ya hay una instancia escuchando activamente en el puerto 8000
 netstat -ano | findstr :8000 | findstr LISTENING > nul

@@ -27,7 +27,7 @@ PLAYWRIGHT_HEADLESS: bool = os.getenv("MONICA_HEADLESS", "true").lower() == "tru
 
 # ---------- LLM (Gemini Cloud) ----------
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "AIzaSyC-cOSuhE8hRLdMAz6CxI5FGWGSYdIW4HM")
-DEFAULT_MODEL = os.getenv("MONICA_DEFAULT_MODEL", "gemini-2.5-flash")
+DEFAULT_MODEL = os.getenv("MONICA_DEFAULT_MODEL", "gemini-2.5-flash-lite")
 LLM_TIMEOUT_SECONDS = int(os.getenv("MONICA_LLM_TIMEOUT", "120"))
 
 # ---------- Logging ----------

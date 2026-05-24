@@ -1046,6 +1046,31 @@
             });
         }
 
+        // --- CLIPBOARD PASTE SUPPORT (Ctrl+V) ---
+        window.addEventListener('paste', async (e) => {
+            const items = (e.clipboardData || window.clipboardData).items;
+            const files = [];
+            for (let i = 0; i < items.length; i++) {
+                const item = items[i];
+                if (item.kind === 'file') {
+                    const blob = item.getAsFile();
+                    if (blob) {
+                        // Crear un archivo con nombre por defecto para imágenes pegadas
+                        let filename = blob.name;
+                        if (item.type.startsWith('image/') && (!filename || filename === 'image.png')) {
+                            filename = `pasted_image_${Date.now()}.png`;
+                        }
+                        const file = new File([blob], filename, { type: blob.type });
+                        files.push(file);
+                    }
+                }
+            }
+            if (files.length > 0) {
+                e.preventDefault();
+                await processFilesForUpload(files);
+            }
+        });
+
         let activeAbortController = null;
         const chatForm = document.getElementById('chat-form');
         const submitBtn = chatForm.querySelector('button[type="submit"]');
