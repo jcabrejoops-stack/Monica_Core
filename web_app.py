@@ -417,15 +417,16 @@ async def chat_message(payload: dict):
             "HERRAMIENTAS XML DISPONIBLES:\n"
             "1. <run_command>comando</run_command> (Ejecuta un comando real en la consola, ej: venv\\Scripts\\pip.exe install emoji)\n"
             "2. <read_file path=\"ruta_archivo\" /> (Lee el contenido de cualquier archivo en tu computadora para analizar el código antes de editarlo)\n"
-            "3. <write_file path=\"ruta_archivo\">contenido</write_file> (Escribe o sobrescribe un archivo local para inyectar código)\n"
-            "4. <run_python_sandbox code=\"codigo_python\" /> (Ejecuta código Python localmente y devuelve la salida)\n"
-            "5. <os_list_dir path=\"ruta_directorio\" /> (Lista archivos de un directorio local para que puedas orientarte)\n"
-            "6. <os_manage_files action=\"copy|move|delete\" target=\"ruta\" destination=\"destino\" /> (Gestión de archivos)\n"
-            "7. <browser_navigate url=\"url\" /> (Navega por la web y extrae el texto de la página)\n"
-            "8. <generate_image prompt=\"descripcion\" /> (Genera una imagen con IA)\n"
-            "9. <generate_video prompt=\"descripcion\" scenes=\"4\" /> (Genera un video con IA)\n"
-            "10. <generate_audio text=\"texto_a_hablar\" /> (Genera un audio TTS con IA)\n"
-            "11. <generate_video_i2v image=\"ruta\" prompt=\"instruccion\" /> (Anima una imagen guardada convirtiéndola en video)\n\n"
+            "3. <write_file path=\"ruta_archivo\">contenido</write_file> (Escribe o sobrescribe un archivo local entero con nuevo contenido)\n"
+            "4. <replace_file_content path=\"ruta_archivo\"><target>codigo_original_exacto</target><replacement>nuevo_codigo_reemplazo</replacement></replace_file_content> (Reemplaza de forma quirurgica y ultra-rapida una seccion especifica de codigo sin sobrescribir todo el archivo. ¡USA ESTO PARA EDITAR ARCHIVOS GRANDES!)\n"
+            "5. <run_python_sandbox code=\"codigo_python\" /> (Ejecuta código Python localmente y devuelve la salida)\n"
+            "6. <os_list_dir path=\"ruta_directorio\" /> (Lista archivos de un directorio local para que puedas orientarte)\n"
+            "7. <os_manage_files action=\"copy|move|delete\" target=\"ruta\" destination=\"destino\" /> (Gestión de archivos)\n"
+            "8. <browser_navigate url=\"url\" /> (Navega por la web y extrae el texto de la página)\n"
+            "9. <generate_image prompt=\"descripcion\" /> (Genera una imagen con IA)\n"
+            "10. <generate_video prompt=\"descripcion\" scenes=\"4\" /> (Genera un video con IA)\n"
+            "11. <generate_audio text=\"texto_a_hablar\" /> (Genera un audio TTS con IA)\n"
+            "12. <generate_video_i2v image=\"ruta\" prompt=\"instruccion\" /> (Anima una imagen guardada convirtiéndola en video)\n\n"
             "REGLAS CRÍTICAS:\n"
             "- Cuando edites código, ¡HAZLO TODO TÚ! No le digas al usuario 'aquí tienes el código, pégalo'. Usa <write_file> y dile 'Listo, ya edité el archivo'.\n"
             "- Usa <read_file path=\"templates/index.html\" /> por ejemplo, si necesitas saber cómo está armada la UI antes de editarla.\n"
@@ -443,6 +444,7 @@ async def chat_message(payload: dict):
 
         read_pattern = re.compile(r'<read_file\s+path=["\'](.*?)["\']\s*/>', re.DOTALL)
         write_pattern = re.compile(r'<write_file\s+path=["\'](.*?)["\']>(.*?)</write_file>', re.DOTALL)
+        replace_pattern = re.compile(r'<replace_file_content\s+path=["\'](.*?)["\']>\s*<target>(.*?)</target>\s*<replacement>(.*?)</replacement>\s*</replace_file_content>', re.DOTALL)
         command_pattern = re.compile(r'<run_command>(.*?)</run_command>', re.DOTALL)
         image_pattern = re.compile(r'<generate_image\s+prompt=["\'](.*?)["\']\s*/>', re.DOTALL)
         video_pattern = re.compile(r'<generate_video\s+prompt=["\'](.*?)["\'](?:\s+scenes=["\'](\d+)["\'])?\s*/>', re.DOTALL)
@@ -729,6 +731,60 @@ async def chat_message(payload: dict):
                     answer = write_pattern.sub(lambda m: f"\n*[Archivo escrito: `{path_str}`]*\n", answer, count=1)
                 except Exception as e:
                     turn_observations.append(f"❌ **Error al escribir archivo {path_str}**: {e}")
+
+            # 9.5. Procesar reemplazo quirúrgico de contenido en archivos (Edición Quirúrgica de Precisión)
+            for match in replace_pattern.finditer(answer):
+                path_str = match.group(1).strip()
+                target_str = match.group(2)
+                replacement_str = match.group(3)
+                
+                file_path = Path(path_str)
+                if not file_path.is_absolute():
+                    file_path = BASE_DIR / file_path
+                
+                try:
+                    if file_path.exists() and file_path.is_file():
+                        with open(file_path, "r", encoding="utf-8", errors="replace") as f:
+                            file_content = f.read()
+                        
+                        if target_str in file_content:
+                            new_content = file_content.replace(target_str, replacement_str, 1)
+                            with open(file_path, "w", encoding="utf-8") as f:
+                                f.write(new_content)
+                            log_event(f"Mónica Agentic: Reemplazó quirúrgicamente sección en '{path_str}'.")
+                            turn_observations.append(f"🔧 **Reemplazo quirúrgico exitoso** en `{path_str}`.")
+                            all_actions_executed.append(
+                                f'<details class="react-step"><summary>🔧 Reemplazo Quirúrgico: {path_str}</summary>'
+                                f'<p><strong>Código a reemplazar:</strong></p><pre><code>{target_str}</code></pre>'
+                                f'<p><strong>Código nuevo:</strong></p><pre><code>{replacement_str}</code></pre></details>'
+                            )
+                        else:
+                            # Reintento por coincidencia de stripped
+                            target_stripped = target_str.strip()
+                            if target_stripped and target_stripped in file_content:
+                                start_idx = file_content.find(target_stripped)
+                                end_idx = start_idx + len(target_stripped)
+                                new_content = file_content[:start_idx] + replacement_str + file_content[end_idx:]
+                                with open(file_path, "w", encoding="utf-8") as f:
+                                    f.write(new_content)
+                                log_event(f"Mónica Agentic: Reemplazó quirúrgicamente sección (coincidencia parcial) en '{path_str}'.")
+                                turn_observations.append(f"🔧 **Reemplazo quirúrgico exitoso (coincidencia parcial)** en `{path_str}`.")
+                                all_actions_executed.append(
+                                    f'<details class="react-step"><summary>🔧 Reemplazo Quirúrgico: {path_str}</summary>'
+                                    f'<p><strong>Código a reemplazar:</strong></p><pre><code>{target_stripped}</code></pre>'
+                                    f'<p><strong>Código nuevo:</strong></p><pre><code>{replacement_str}</code></pre></details>'
+                                )
+                            else:
+                                turn_observations.append(
+                                    f"❌ **Error al reemplazar**: No se encontró la sección '<target>' exacta en `{path_str}`. "
+                                    f"Asegúrate de copiar exactamente las líneas del archivo (incluyendo espacios de sangría al inicio de cada línea)."
+                                )
+                    else:
+                        turn_observations.append(f"❌ **Error al reemplazar**: El archivo `{path_str}` no existe.")
+                except Exception as e:
+                    turn_observations.append(f"❌ **Error al realizar reemplazo en {path_str}**: {e}")
+                
+                answer = replace_pattern.sub(lambda m: f"\n*[Reemplazo quirúrgico realizado en: `{path_str}`]*\n", answer, count=1)
             
             # 10. Procesar ejecución de comandos en terminal
             for cmd_match in command_pattern.findall(answer):
