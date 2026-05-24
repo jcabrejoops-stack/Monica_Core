@@ -525,6 +525,44 @@
             }
         }
 
+        // ===================== NATIVE SYSTEM NOTIFICATIONS =====================
+        function checkAndRequestNotificationPermission() {
+            if ("Notification" in window) {
+                if (Notification.permission === "default") {
+                    Notification.requestPermission().then(permission => {
+                        if (permission === "granted") {
+                            console.log("¡Notificaciones de Mónica activadas con éxito!");
+                            sendSystemNotification("¡Mónica conectada!", "Ahora te notificaré por aquí cuando tenga respuestas o complete tareas.");
+                        }
+                    });
+                }
+            }
+        }
+
+        function sendSystemNotification(title, text) {
+            if ("Notification" in window && Notification.permission === "granted") {
+                if (document.visibilityState === 'hidden') {
+                    // Limpiar HTML para el cuerpo de la notificación
+                    const tempDiv = document.createElement("div");
+                    tempDiv.innerHTML = text;
+                    let cleanText = tempDiv.textContent || tempDiv.innerText || "";
+                    cleanText = cleanText.substring(0, 150) + (cleanText.length > 150 ? '...' : '');
+
+                    const notification = new Notification(title, {
+                        body: cleanText,
+                        icon: '/static/logo_monica.png',
+                        tag: 'monica-new-message',
+                        requireInteraction: false
+                    });
+
+                    notification.onclick = function() {
+                        window.focus();
+                        this.close();
+                    };
+                }
+            }
+        }
+
         // ===================== HELPERS =====================
         function addMsg(container, content, fromUser, isHtml = false, attachments = null, messageIndex = null) {
             const msg = document.createElement('div');
@@ -541,9 +579,23 @@
             if (isHtml) {
                 textSpan.innerHTML = content;
             } else if (!fromUser) {
-                let processedContent = content;
+                let htmlContent = content;
+                try {
+                    if (typeof marked !== 'undefined') {
+                        htmlContent = marked.parse(content);
+                    }
+                } catch (e) {
+                    console.error("Error parsing markdown:", e);
+                }
+
+                // Expresiones regulares para detectar <ask_user> crudo o escapado por marked
                 const askRegex = /<ask_user\s+options="([^"]+)">([\s\S]*?)<\/ask_user>/gi;
-                processedContent = processedContent.replace(askRegex, (match, optionsStr, question) => {
+                const askRegexEscaped = /&lt;ask_user\s+options=&quot;([^&quot;]+)&quot;&gt;([\s\S]*?)&lt;\/ask_user&gt;/gi;
+                
+                const replaceCallback = (match, optionsStr, question) => {
+                    optionsStr = optionsStr.replace(/&quot;/g, '"').replace(/&amp;/g, '&');
+                    question = question.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
+                    
                     const options = optionsStr.split(',').map(o => o.trim());
                     let html = `<div class="ask-user-prompt" style="margin-top: 12px; color: var(--color-primary);"><strong>${question}</strong></div>`;
                     html += `<div class="ask-options-container">`;
@@ -555,17 +607,15 @@
                         <button type="button" onclick="const val = this.previousElementSibling.value; if(val) { const input = document.getElementById('chat-input'); input.value = val; document.getElementById('chat-form').dispatchEvent(new Event('submit')); }">➜</button>
                     </div></div>`;
                     return html;
-                });
-                
-                try {
-                    if (typeof marked !== 'undefined') {
-                        textSpan.innerHTML = marked.parse(processedContent);
-                    } else {
-                        textSpan.innerHTML = processedContent;
-                    }
-                } catch (e) {
-                    textSpan.innerHTML = processedContent;
+                };
+
+                if (askRegex.test(htmlContent)) {
+                    htmlContent = htmlContent.replace(askRegex, replaceCallback);
+                } else if (askRegexEscaped.test(htmlContent)) {
+                    htmlContent = htmlContent.replace(askRegexEscaped, replaceCallback);
                 }
+                
+                textSpan.innerHTML = htmlContent;
             } else {
                 textSpan.textContent = content;
             }
@@ -1079,6 +1129,9 @@
         chatForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
+            // Solicitar permiso de notificaciones nativas en el primer envío/interacción del usuario
+            checkAndRequestNotificationPermission();
+            
             // Si está cargando y se le da click, se cancela el razonamiento
             if (submitBtn.classList.contains('loading-state')) {
                 if (activeAbortController) {
@@ -1092,8 +1145,6 @@
             if (!text && uploadedAttachments.length === 0) return;
             
             const attachmentsToSend = [...uploadedAttachments];
-            
-
             
             // Estimar el índice para permitir edición inmediata del mensaje enviado
             let estimatedIndex = null;
@@ -1109,7 +1160,7 @@
             
             input.value = '';
             uploadedAttachments = [];
-
+ 
             if (previewContainer) {
                 previewContainer.innerHTML = '';
                 previewContainer.style.display = 'none';
@@ -1144,7 +1195,13 @@
                 const data = await resp.json();
                 loader.remove();
                 setAgentStatus('active');
-                addMsg(messagesDiv, data.response || data.error || 'Sin respuesta', false);
+                
+                const responseText = data.response || data.error || 'Sin respuesta';
+                addMsg(messagesDiv, responseText, false);
+                
+                // Enviar notificación de sistema nativa si la pestaña no está activa
+                sendSystemNotification("Mónica", responseText);
+                
                 loadSessions(); // Actualizar títulos de sesiones
             } catch (err) {
                 loader.remove();
